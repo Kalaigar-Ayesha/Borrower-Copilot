@@ -1,91 +1,53 @@
-# Borrower Copilot - Decision Engine Rules & Assumptions Documentation (`RULES.md`)
+# Borrower Copilot - Rules, Assumptions & Limitations (`RULES.md`)
 
-This document outlines the explicit financial assumptions, mathematical formulas, and product decision rules governing the **Borrower Copilot Decision Engine**.
-
----
-
-## 🏛️ Centralized Financial Assumptions (`src/data/assumptions.js`)
-
-All thresholds are centralized in `src/data/assumptions.js` to ensure zero magic numbers exist in codebase logic:
-
-| Assumption Name | Threshold / Value | Purpose & Financial Explanation |
-| :--- | :--- | :--- |
-| `MAX_SALARIED_FOIR` | 55% of Net Income | Max allowable Fixed Obligation to Income Ratio for salaried corporate applicants. |
-| `MAX_SELF_EMPLOYED_FOIR` | 50% of ITR Net Profit | Bank sanction ceiling for self-employed individuals based on reported ITR returns. |
-| `MAX_INFORMAL_GIG_FOIR` | 40% of Monthly Cashflow | Conservative bank sanction limit accounting for gig cash flow volatility. |
-| `SAFE_INCOME_EMI_CAP` | 30% of Net Income | Borrower-safe limit recommending EMI should never exceed 30% of net monthly income. |
-| `SAFE_SURPLUS_EMI_CAP` | 40% of Unencumbered Surplus | Caps EMI at 40% of cash surplus remaining after deducting household living costs and existing debts. |
-| `DEFAULT_ESTIMATED_LIVING_COST_RATIO` | 38% of Net Income | Benchmark used when living expenses are skipped or unknown. Prevents treating unknown as ₹0. |
-| `LAP_MAX_LTV` | 50% of Property Valuation | Maximum Loan Against Property (LAP) sanction limit against commercial/residential real estate. |
-| `COLLATERAL_LAP_RATE_DISCOUNT` | -2.50% Interest Discount | Interest rate reduction granted when borrower pledges unencumbered property collateral. |
-| `GST_RATE` | 18% | Mandatory Indian Government GST tax applied to bank processing fees and documentation charges. |
-| `STRESS_INCOME_SHOCK` | -20% Income Reduction | Simulates salary cut, job loss gap, or lean business quarter in stress testing. |
-| `STRESS_RATE_HIKE` | +2.00% Interest Spike | Simulates a 200 bps tightening cycle by the RBI on floating-rate retail loans. |
-| `PREDATORY_APR_THRESHOLD` | 24.0% All-In APR | Triggers an immediate `DO NOT BORROW` decision if effective all-in cost exceeds 24% p.a. |
+This document outlines the explicit financial assumptions, mathematical formulas, data sourcing, and product decision rules governing the **Borrower Copilot Decision Engine**.
 
 ---
 
-## ⚖️ Lender Sanction vs. Borrower-Safe Capacity
+## 📊 Comprehensive Rules & Assumptions Table
 
-Borrower Copilot explicitly separates **what banks will lend** from **what you can safely afford**:
-
-### 1. Lender-Style Sanction Capacity
-Estimates what a commercial bank may sanction based on their risk limits:
-$$\text{Lender Max EMI} = (\text{Evaluated Monthly Income} \times \text{FOIR Cap}) - \text{Existing Monthly EMIs}$$
-- **Salaried**: Evaluated on net monthly salary credited to bank account.
-- **Self-Employed**: Evaluated on latest filed ITR net profit divided by 12.
-- **Secured / LAP**: Evaluated on Property Valuation $\times$ 50% LTV, capped by FOIR.
-
-### 2. Borrower-Safe Capacity
-Calculates conservative borrowing limits to preserve cash flow and prevent debt traps:
-$$\text{Effective Disposable Surplus} = \text{Net Income} + \text{Productive ROI Boost} - \text{Household Living Costs} - \text{Existing EMIs}$$
-$$\text{Safe EMI Ceiling} = \min\Big(\text{Net Income} \times 30\%, \text{Disposable Surplus} \times 40\%\Big)$$
-
----
-
-## 🚦 Decision Verdict Tree (`BORROW`, `BORROW_LESS`, `DONT_BORROW`)
-
-### `DONT_BORROW` Conditions (Reachability Guaranteed)
-1. **Active High-Cost Informal Debt**: Borrower carries BNPL, credit card roll-overs, or local money lender debt.
-2. **Recent Payment Bounces**: Cheque, NACH, or EMI bounces in past 6 months.
-3. **Negative Cash Flow**: Proposed EMI exceeds unencumbered monthly surplus after living costs.
-4. **Severe Debt Burden**: Total post-loan FOIR exceeds 55%.
-5. **Predatory All-In APR**: Effective APR exceeds 24.0% p.a.
-
-### `BORROW_LESS` Conditions
-1. **Over Safe Capacity**: Requested loan principal exceeds Borrower-Safe Capacity by >15%.
-2. **Bank Over-Sanction**: Bank sanction limit is significantly higher than safe capacity, tempting borrower to over-borrow.
-3. **Young Business Risk**: Business operating history < 2 years requesting high unsecured principal.
-
-### `BORROW` Conditions
-1. Requested loan amount is within Borrower-Safe Capacity.
-2. Post-loan FOIR remains below 40-45%.
-3. Positive surplus cushion remains after paying proposed EMI.
+| What | Value | Why | Source |
+| :--- | :--- | :--- | :--- |
+| **RBI Repo-Linked Base Rate** | `8.50% p.a.` | Reference baseline interest rate for prime retail lending in India. | **Externally Sourced** (RBI Monetary Policy & Retail Bank Margins) |
+| **Max Salaried FOIR Ceiling** | `55%` of Net Income | Maximum allowable Fixed Obligation to Income Ratio for salaried applicants. | **Externally Sourced** (Private & PSU Indian Banking Standards) |
+| **Max Self-Employed FOIR** | `50%` of Net Profit | Bank sanction limit for self-employed individuals based on reported ITR net profit. | **Externally Sourced** (Indian MSME / Self-Employed Bank Guidelines) |
+| **Max Informal / Gig FOIR** | `40%` of Cash Flow | Conservative bank sanction limit for gig/contract workers due to income volatility. | **Product Assumption** (Copilot Risk Policy) |
+| **Borrower-Safe Income EMI Cap** | `30%` of Net Income | Recommends that no borrower allocate >30% of net monthly income to loan EMIs. | **Product Assumption** (Personal Financial Planning Safety Standards) |
+| **Borrower-Safe Surplus Cap** | `40%` of Cash Surplus | Limits new EMI to 40% of unencumbered disposable cash surplus after living costs. | **Product Assumption** (Copilot Cashflow Protection Model) |
+| **Default Urban Expenses Ratio** | `38%` of Net Income | Default benchmark used when household living expenses are skipped or unknown. | **My Judgment** (Urban Indian Household Expenditure Averages) |
+| **LAP Property Max LTV** | `50%` of Property Value | Maximum Loan Against Property (LAP) sanction limit against commercial/residential property. | **Externally Sourced** (RBI LTV Directives on Property Mortgages) |
+| **Collateral Rate Discount** | `-2.50%` Interest Discount | Interest rate reduction granted when borrower pledges unencumbered real estate property. | **Externally Sourced** (Secured vs Unsecured Pricing Spreads) |
+| **GST Rate on Financial Fees** | `18%` | Mandatory Indian Government tax applied to all bank processing fees and documentation charges. | **Externally Sourced** (Indian Goods and Services Tax Act) |
+| **Predatory APR Threshold** | `24.0%` All-In APR | Triggers an immediate `DO NOT BORROW` decision if effective all-in cost exceeds 24% p.a. | **My Judgment** (RBI Microfinance & Usury Cap Directives) |
+| **Income Stress Shock** | `-20%` Income Reduction | Simulates salary cut, job loss gap, or lean business quarter in stress testing. | **Product Assumption** (Economic Shock Resilience Simulation) |
+| **Interest Rate Hike Shock** | `+2.00%` Rate Spike | Simulates a 200 bps tightening cycle by the RBI on floating-rate retail loans. | **Product Assumption** (RBI Rate Hike Sensitivity Testing) |
 
 ---
 
-## 🔀 Product-Aware Routing Logic (Ravi's Persona Case)
+## 🔍 Data Source & Judgment Classification
 
-Standard retail loan portals evaluate all applicants as unsecured personal loan seekers. Borrower Copilot implements **Product-Aware Routing**:
+### 1. Externally Sourced Information
+- **RBI Repo Rate & Banking Margins**: Baseline retail rate of 8.50% p.a.
+- **Bank FOIR Standards**: 50–55% maximum debt-to-income limits.
+- **GST Rate**: Mandatory 18% tax on processing fees.
+- **Property LTV Directives**: 50% LTV limit for Loan Against Property (LAP).
 
-- **Trigger Condition**:
-  - `incomeType === 'SELF_EMPLOYED'`
-  - `hasCollateral === true` (e.g. ₹45 Lakh unencumbered shop property)
-  - `loanPurpose === 'BUSINESS'` (Business expansion)
-- **Routing Decision**:
-  - Routes applicant from *Unsecured Personal Loan* (16–18% interest) to **Secured Business Loan / Loan Against Property (LAP)**.
-- **Impact**:
-  - Unlocks lower fair interest rate range (**9.5% – 11.0%**).
-  - Unlocks higher bank sanction capacity based on 50% Property LTV (up to ₹22.5 Lakhs).
-  - Recognizes borrowing as **Productive Revenue-Generating**, offsetting EMI strain with expected business income growth.
+### 2. Product Assumptions
+- **Borrower-Safe EMI Ceiling**: Capped at 30% of Net Income or 40% of Unencumbered Cash Surplus.
+- **Unknown Parameter Handling**: Unknown fields trigger conservative market benchmarks (e.g. 38% living expenses) and widen rate ranges without assuming ₹0.
+- **Stress Test Scenarios**: -20% Income Reduction & +2.0% RBI Rate Spike.
+
+### 3. Developer / Product Judgment
+- **Unrated CIBIL Handling**: Unknown credit scores widen rate ranges (e.g. `10.0% – 13.5%`) and lower confidence score without automatically rejecting the applicant.
+- **Predatory APR Cap (24%)**: Protects retail borrowers from high-cost informal or unregulated payday/BNPL debt traps.
+- **Product Routing**: Automatically routes self-employed applicants with property collateral to LAP / Secured Business loans (Ravi's scenario).
 
 ---
 
-## ❓ Unknown Values & Confidence Principles
+## ⚠️ Important Limitations & Disclaimers
 
-1. **Unknown Credit Score**: If credit score is unknown or unrated, Copilot does **NOT** treat it as 0 or assume bad credit. It widens the fair interest rate range (e.g. `10.0% – 13.5%`) and lowers the Confidence Rating (`Medium` or `Low`).
-2. **Unknown Living Expenses**: Estimated automatically at 38% of net income.
-3. **Confidence Rating**:
-   - **High**: All key parameters verified (Income, Expenses, Credit Tier, Quoted Terms).
-   - **Medium**: 1-2 parameters estimated (Wide ranges applied).
-   - **Low**: 3+ parameters skipped or unverified (Very wide ranges applied).
+1. **No Credit Bureau Data**: Copilot does not pull official CIBIL/Experian bureau credit reports. Credit score inputs are self-reported by the user.
+2. **User-Provided Income**: Income and living expense figures are user-stated and unverified by bank statements or tax portals.
+3. **Self-Assessment Tool (Not a Lender)**: Borrower Copilot is an objective decision-support and negotiation-support tool. It does not provide formal bank underwriting or guaranteed loan approvals.
+4. **Rate & APR Estimates**: Interest rate ranges (`11.0% – 12.5%`) and All-In APRs are estimates based on documented market assumptions. Actual bank quotes may differ based on individual lender risk policies.
+5. **Educational Decision Support**: This application does not constitute formal financial, legal, or investment advice.

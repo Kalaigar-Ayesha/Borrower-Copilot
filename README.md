@@ -5,116 +5,174 @@
 
 ---
 
-## ⚡ Quick Start (Under 2 Minutes)
+## 🌟 What It Does
+
+**Borrower Copilot** is a decision-first financial support web application that helps Indian retail borrowers evaluate whether they should take a loan, how much they can safely afford (vs what banks sanction), true All-In Effective APRs, stress resilience, and exact bank negotiation tactics.
+
+---
+
+## 🎯 Why It Exists
+
+Commercial banks in India calculate eligibility based on what they can legally sell under 50-55% Fixed Obligation to Income Ratio (FOIR) caps. Lenders ignore personal living costs (rent, groceries, dependants) because they profit from interest.
+
+Borrower Copilot flips this paradigm: It asks **"What can your household budget safely carry without risking cash flow deficit or default?"**
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: React 18+ via Vite
+- **Language**: JavaScript (JSX - No TypeScript, No unnecessary build overhead)
+- **Styling**: Pure Vanilla CSS with CSS Custom Properties (Design Tokens)
+- **Architecture**: 100% Client-Side React State & Decoupled Pure JS Rule Engine
+
+---
+
+## 📐 Architecture & Data Flow
+
+```
+User Interactive Input (UI)
+       │
+       ▼
+Borrower Profile Object (React State)
+       │
+       ▼
+Pure JS Rule Engine (`src/rules/` + `src/data/assumptions.js`)
+       │
+       ▼
+Structured Assessment Result (Verdict, Ranges, APR, Stress Test)
+       │
+       ▼
+Decision-First Results UI & Bank Negotiation Card
+```
+
+---
+
+## ⚡ Running Locally (Under 2 Minutes)
 
 ```bash
-# 1. Clone or navigate to repository root directory
-cd Browwer
+# 1. Clone repository
+git clone https://github.com/Kalaigar-Ayesha/Borrower-Copilot.git
+cd Borrower-Copilot
 
 # 2. Install dependencies
 npm install
 
 # 3. Start local development server
 npm run dev
+
+# 4. Run automated rule engine unit test suite (16/16 Passed)
+node src/rules/tests/runAssessmentTests.js
 ```
 
-Open your browser at `http://localhost:5173` (or the URL printed in terminal).
+Open your browser at `http://localhost:5173`.
 
 ---
 
-## 🎯 Product Overview & Vision
-
-**Borrower Copilot** is a consumer-facing financial decision-support tool designed specifically for the Indian retail lending landscape.
-
-Unlike generic loan calculators or bank loan portals that focus on *"How much can we lend you?"*, Borrower Copilot answers the critical consumer question:  
-👉 **"Should I borrow this money, how much is actually safe for my budget, and how do I negotiate the best deal with the bank?"**
-
----
-
-## 🧠 Core Product Principles
-
-1. **Borrow / Borrow Less / Don't Borrow Verdict**: "Don't borrow" is a first-class real outcome driven by debt-trap indicators (FOIR > 55%, negative cash flow, APR > 24%).
-2. **Lender Sanction vs. Borrower Safe Capacity**:
-   - **Lender Capacity**: Based on bank FOIR (Fixed Obligation to Income Ratio, max 50-55% of gross/net income). Lenders ignore your personal living costs.
-   - **Borrower-Safe Capacity**: Deducts essential living expenses (rent, groceries, dependants) and reserves a buffer before allocating to loan EMIs (capping EMI at 30% of income or 40% of disposable surplus).
-3. **Unknown is Never Treated as Zero**: Skipping an expense or fee parameter does not default to ₹0. Copilot uses conservative Indian market benchmarks and expands uncertainty ranges (±10% to ±20%) while lowering the Confidence Score.
-4. **All-In Effective APR Transparency**: Factoring nominal interest rates, upfront processing fees, documentation charges, and **mandatory 18% GST** to calculate true IRR cost.
-5. **3-Point Economic Stress Scenarios**: Tests cash flow resilience against a 20% income reduction, a ₹20,000/mo emergency expense, and a 2.5% RBI interest rate hike.
-6. **Bank Negotiation Battlecard**: Generates word-for-word scripts, counter-offers, fee waiver demands, and pre-payment penalty clauses for bank Relationship Managers.
-7. **Strict Decoupling of Rules**: Business/financial rules live entirely in pure JavaScript engines (`src/rules/`), completely independent of React UI components.
-
----
-
-## 🏗️ Architecture & Folder Structure
+## 📁 Project Structure
 
 ```
 Browwer/
-├── index.html                  # SEO & Typography Shell (Playfair Display + Plus Jakarta Sans)
+├── README.md                   # Complete Setup & Architecture Guide
+├── RULES.md                    # Transparent Financial Rules & Assumptions Table
+├── index.html                  # Editorial Shell & Google Fonts Preconnect
 ├── package.json
 ├── vite.config.js
+├── docs/
+│   ├── PRIYA.md                # Persona Run-Through 1 (Safe Salaried Profile)
+│   ├── RAVI.md                 # Persona Run-Through 2 (Self-Employed LAP Secured Route)
+│   ├── ANITA.md                # Persona Run-Through 3 (Informal / Gig High-Risk Debt)
+│   └── WALKTHROUGH.md          # 5-Minute Technical Presentation Script
 └── src/
-    ├── main.jsx                # Application Entrypoint
-    ├── App.jsx                 # Main Shell & Routing State
-    ├── index.css               # Editorial CSS Design System & Variables
+    ├── main.jsx                # App Entrypoint
+    ├── App.jsx                 # Page Shell & State Wiring
+    ├── index.css               # Editorial CSS Design System & Accessibility Focus Rings
     ├── data/
-    │   └── indianLendingBenchmarks.js  # RBI Repo rates, CIBIL bands, GST rates, FOIR caps
-    ├── rules/                   # PURE FINANCIAL LOGIC ENGINES (Decoupled from UI)
-    │   ├── financialCalculations.js  # EMI, Max Principal, Lender Sanction & Borrower Safe Capacity
-    │   ├── aprEngine.js              # IRR Solver, All-In APR, Processing Fee + 18% GST Drag
-    │   ├── recommendationEngine.js   # Decision Verdict (BORROW | BORROW_LESS | DONT_BORROW)
-    │   ├── confidenceEngine.js       # Confidence scoring & range expansion engine
-    │   ├── stressEngine.js           # Economic shock simulation (Income drop, Emergency, Rate hike)
-    │   └── negotiationEngine.js      # Bank RM talking points & savings calculation
+    │   └── assumptions.js      # Centralized Configurable Financial Thresholds & Spreads
+    ├── rules/                  # PURE JAVASCRIPT DECISION ENGINE (Decoupled from UI)
+    │   ├── affordability.js    # Lender Sanction FOIR vs Borrower Safe Affordability
+    │   ├── borrowingDecision.js# Decision Verdict (BORROW | BORROW LESS | DONT BORROW)
+    │   ├── loanAmount.js       # Sanction Range, Safe Range & Recommended Amount
+    │   ├── interestRate.js     # Fair Rate Ranges (e.g., 11.0% - 12.5%, no false precision)
+    │   ├── apr.js              # All-In APR Solver (Nominal Rate + Fees + 18% GST)
+    │   ├── emi.js              # Standard Amortization Math & Safe EMI Ceiling
+    │   ├── stressTest.js       # 2-Point Economic Shocks (-20% Income, +2% Rate Spike)
+    │   ├── confidence.js       # Uncertainty & Range Expansion Engine
+    │   ├── productRouting.js   # Product-Aware Routing (LAP / Secured Business for Ravi)
+    │   ├── assessment.js       # Central Orchestrator: calculateAssessment(borrower)
+    │   └── tests/
+    │       └── runAssessmentTests.js  # Automated Unit Test Runner (16/16 Passed)
     ├── questions/
-    │   └── assessmentSteps.js    # Adaptive step configurations & conditional branching
+    │   └── questionBank.js     # Adaptive Question Schema & Impact Explanations
     ├── hooks/
-    │   └── useAssessment.js      # Custom React Hook connecting rules to UI state
-    ├── components/              # REUSABLE PRESENTATION COMPONENTS
-    │   ├── Header.jsx            # Brand navigation & step progress tracker
-    │   ├── Footer.jsx            # Disclaimer & methodology summary
-    │   ├── WhyModal.jsx          # Interactive "Why?" drawer explaining mathematical rationale
-    │   ├── VerdictBanner.jsx     # High-impact decision card with action plans
-    │   ├── CapacityComparison.jsx # Side-by-side Bank Sanction vs Borrower Safe comparison
-    │   ├── AprBreakdown.jsx      # Nominal rate vs True All-In APR card
-    │   ├── TenureTradeoff.jsx    # Interactive tenure comparison matrix (1 to 20 yrs)
-    │   ├── StressScenario.jsx    # 3-Point stress test pass/fail cards
-    │   ├── ConfidenceBadge.jsx   # Confidence rating & missing parameter guidance
-    │   └── NegotiationCard.jsx   # Printable bank negotiation battlecard
+    │   └── useAssessment.js    # React Hook connecting rule engine to UI state
     ├── pages/
-    │   ├── LandingPage.jsx       # Editorial hero & fast demo preset profile switcher
-    │   ├── AssessmentPage.jsx    # Adaptive questionnaire with live calculation feedback
-    │   └── ResultsPage.jsx       # Comprehensive Copilot evaluation report
-    └── utils/
-        └── formatters.js         # Indian Rupee (₹, Lakhs), percentage, & tenure formatters
+    │   ├── LandingPage.jsx     # Hero & 3 persona launcher
+    │   ├── AssessmentPage.jsx  # Single-question guided conversational questionnaire
+    │   └── ResultsPage.jsx     # Decision-first evaluation report & 7 unique features
+    └── components/
+        ├── PrivacyBanner.jsx   # Privacy by Design trust statement
+        ├── VerdictBanner.jsx   # Decision verdict card
+        ├── CapacityComparison.jsx # Borrower-Safe (Dominant) vs Lender Sanction
+        ├── QuoteCheckCard.jsx  # Bank offer comparison tool
+        ├── WhatIfSimulator.jsx # Fast client-side slider simulator
+        ├── InteractiveStressTest.jsx # Interactive shock simulator
+        ├── DecisionTrail.jsx   # Visual rule engine flowchart
+        ├── NegotiationCard.jsx # RM negotiation battlecard with copy/print controls
+        └── ConfidenceCommunication.jsx # Precision rating breakdown
 ```
 
 ---
 
-## 🎨 Visual Design Direction
+## 📜 Financial Rules & Business Logic
 
-- **Palette**: Warm off-white (`#FAF8F5`), soft cream (`#F6F2EC`), muted sand (`#D4C4A8`), soft sage green (`#5B7B6B`), deep forest green (`#1E3A2B`), dark charcoal (`#1A1D1A`).
-- **Typography**: Dual font pairing — *Playfair Display* for authoritative editorial headings + *Plus Jakarta Sans* for crisp financial UI elements.
-- **Aesthetic**: Calm, trustworthy, human, and minimal. Avoids cheap fintech gradients, dashboard clutter, or admin panel visual noise.
+All lending logic lives in `src/rules/` and `src/data/assumptions.js`.  
+Key rules include:
+1. **Lender FOIR vs Borrower Safe Capacity**: Lenders cap debt at 50-55% FOIR; Copilot caps EMI at 30% of income or 40% of unencumbered disposable surplus after living expenses.
+2. **Product-Aware Routing**: Self-employed borrowers with property collateral (like **Ravi**) are routed to **Loan Against Property (LAP)** at 9.5-11.0% rate rather than unsecured loans.
+3. **Unknown Values**: Skips/unknowns do not default to ₹0. They trigger market average benchmarks, widen rate ranges, and adjust confidence score.
+4. **All-In APR**: Factoring processing fee + mandatory 18% GST.
 
----
-
-## 🛡️ Interview Defense Points (For Code Walkthrough)
-
-When defending this implementation in an interview:
-
-1. **Why separate `src/rules/` from React UI components?**
-   - Pure JS functions in `src/rules/` have 0 DOM dependencies. They can be unit-tested effortlessly, run on Node.js/Edge workers, or plugged into any UI framework without refactoring financial rules.
-2. **How does the All-in APR calculator work?**
-   - It computes the Internal Rate of Return (IRR) by solving the net cashflow equation: Net Disbursed Principal (`Gross Principal - Processing Fee - 18% GST - Fees`) against monthly EMI outflow over tenure $n$.
-3. **How does Copilot handle missing/unknown inputs?**
-   - Rather than defaulting unknown fields to 0 (which inflates capacity unsafely), `confidenceEngine.js` substitutes market average benchmarks, lowers the Confidence Score (`High` -> `Medium` -> `Low`), and widens the capacity output bounds by $\pm 10\text{--}20\%$.
-4. **How are bank negotiation targets calculated?**
-   - `negotiationEngine.js` compares the quoted interest rate against benchmark repo-linked rates for the borrower's CIBIL tier (e.g. 775+ CIBIL), calculates exact annual rupee savings, and targets a 0.5% capped processing fee.
+Full details are documented in [`RULES.md`](./RULES.md).
 
 ---
 
-## 🧪 Verification & Build Status
+## 💡 Important Product Decisions
 
-- **Build**: Tested with Vite production build (`npm run build`).
-- **Dev Server**: Runs cleanly via `npm run dev`.
-- **Console**: 0 warnings, 0 runtime errors.
+- **Decision-First UX**: Verdict (`BORROW`, `BORROW_LESS`, `DONT_BORROW`) is presented at the top of results with an immediate 1-sentence reason.
+- **Visual Hierarchy**: Borrower-Safe Capacity is styled as the primary action card (`₹7.5 Lakh`), visually dominating the secondary Lender Max Sanction card (`₹12.5 Lakh`).
+- **Explainability**: Every key output features an interactive *"Why?"* drawer explaining the exact underlying mathematics.
+
+---
+
+## ⚠️ Product Limitations
+
+1. **No Bureau Pull**: Credit score is self-reported by the borrower.
+2. **User-Stated Income**: Income and expenses are user-declared (unverified by bank statements).
+3. **Self-Assessment (Not a Lender)**: Does not guarantee actual bank approval.
+
+---
+
+## 🧪 Test Cases & Personas
+
+- **Priya (`docs/PRIYA.md`)**: Salaried Corporate, ₹1.2L income, safe personal loan $\rightarrow$ `BORROW`
+- **Ravi (`docs/RAVI.md`)**: Self-Employed, 0 credit score, ₹45L shop property $\rightarrow$ `BORROW` via Secured LAP Route
+- **Anita (`docs/ANITA.md`)**: Informal / Gig worker, BNPL debt, payment bounce $\rightarrow$ `DONT_BORROW`
+
+---
+
+## 🔮 What I Would Build Next
+
+1. **Document OCR Upload**: Scan sanction letters or bank statements to auto-fill income and bank quotes.
+2. **Multi-Lender Offer Comparison**: Side-by-side comparison matrix of quotes from HDFC, SBI, ICICI, and Axis Bank.
+3. **Live RBI Repo Rate Scraper**: Automatically fetch real-time repo rate updates from RBI RSS feeds.
+4. **Localization**: Support for Hindi, Tamil, Telugu, and Kannada regional languages.
+
+---
+
+## 🚫 What I Intentionally Did Not Build (And Why)
+
+- **No Backend / Database**: Financial data stays 100% in React state for user privacy.
+- **No User Auth / Login**: Frictionless experience; zero barrier to entry.
+- **No Credit Bureau API Integration**: Avoids requiring user PAN/Aadhaar or hard bureau credit pulls.
+- **No Machine Learning / AI Hype**: Used transparent, deterministic financial rule engines that senior engineers and hiring teams can audit and defend.
