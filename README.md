@@ -1,17 +1,16 @@
-# Borrower Copilot 🏦
+# Borrower Copilot
 
-> **Production-Quality Financial Decision-Support Web Product for Indian Retail Borrowers**  
-> Built for the Lokta Software Engineering Intern Take-Home Challenge.
+> **Production-Quality Financial Decision-Support Web Product for Indian Retail Borrowers**
 
 ---
 
-## 🌟 What It Does
+## What It Does
 
 **Borrower Copilot** is a decision-first financial support web application that helps Indian retail borrowers evaluate whether they should take a loan, how much they can safely afford (vs what banks sanction), true All-In Effective APRs, stress resilience, and exact bank negotiation tactics.
 
 ---
 
-## 🎯 Why It Exists
+## Why It Exists
 
 Commercial banks in India calculate eligibility based on what they can legally sell under 50-55% Fixed Obligation to Income Ratio (FOIR) caps. Lenders ignore personal living costs (rent, groceries, dependants) because they profit from interest.
 
@@ -19,7 +18,7 @@ Borrower Copilot flips this paradigm: It asks **"What can your household budget 
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: React 18+ via Vite
 - **Language**: JavaScript (JSX - No TypeScript, No unnecessary build overhead)
@@ -28,7 +27,7 @@ Borrower Copilot flips this paradigm: It asks **"What can your household budget 
 
 ---
 
-## 📐 Architecture & Data Flow
+## Architecture & Data Flow
 
 ```
 User Interactive Input (UI)
@@ -48,7 +47,7 @@ Decision-First Results UI & Bank Negotiation Card
 
 ---
 
-## ⚡ Running Locally (Under 2 Minutes)
+## Running Locally
 
 ```bash
 # 1. Clone repository
@@ -69,7 +68,7 @@ Open your browser at `http://localhost:5173`.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Browwer/
@@ -82,7 +81,7 @@ Browwer/
 │   ├── PRIYA.md                # Persona Run-Through 1 (Safe Salaried Profile)
 │   ├── RAVI.md                 # Persona Run-Through 2 (Self-Employed LAP Secured Route)
 │   ├── ANITA.md                # Persona Run-Through 3 (Informal / Gig High-Risk Debt)
-│   └── WALKTHROUGH.md          # 5-Minute Technical Presentation Script
+│   └── WALKTHROUGH.md          # Technical Presentation Script
 └── src/
     ├── main.jsx                # App Entrypoint
     ├── App.jsx                 # Page Shell & State Wiring
@@ -107,11 +106,11 @@ Browwer/
     ├── hooks/
     │   └── useAssessment.js    # React Hook connecting rule engine to UI state
     ├── pages/
-    │   ├── LandingPage.jsx     # Hero & 3 persona launcher
+    │   ├── LandingPage.jsx     # Hero & 3 borrower profile selection
     │   ├── AssessmentPage.jsx  # Single-question guided conversational questionnaire
-    │   └── ResultsPage.jsx     # Decision-first evaluation report & 7 unique features
+    │   └── ResultsPage.jsx     # Decision-first evaluation report & interactive tools
     └── components/
-        ├── PrivacyBanner.jsx   # Privacy by Design trust statement
+        ├── PrivacyBanner.jsx   # Privacy trust statement
         ├── VerdictBanner.jsx   # Decision verdict card
         ├── CapacityComparison.jsx # Borrower-Safe (Dominant) vs Lender Sanction
         ├── QuoteCheckCard.jsx  # Bank offer comparison tool
@@ -124,7 +123,7 @@ Browwer/
 
 ---
 
-## 📜 Financial Rules & Business Logic
+## Financial Rules & Business Logic
 
 All lending logic lives in `src/rules/` and `src/data/assumptions.js`.  
 Key rules include:
@@ -137,7 +136,7 @@ Full details are documented in [`RULES.md`](./RULES.md).
 
 ---
 
-## 💡 Important Product Decisions
+## Important Product Decisions
 
 - **Decision-First UX**: Verdict (`BORROW`, `BORROW_LESS`, `DONT_BORROW`) is presented at the top of results with an immediate 1-sentence reason.
 - **Visual Hierarchy**: Borrower-Safe Capacity is styled as the primary action card (`₹7.5 Lakh`), visually dominating the secondary Lender Max Sanction card (`₹12.5 Lakh`).
@@ -145,7 +144,7 @@ Full details are documented in [`RULES.md`](./RULES.md).
 
 ---
 
-## ⚠️ Product Limitations
+## Product Limitations
 
 1. **No Bureau Pull**: Credit score is self-reported by the borrower.
 2. **User-Stated Income**: Income and expenses are user-declared (unverified by bank statements).
@@ -153,15 +152,15 @@ Full details are documented in [`RULES.md`](./RULES.md).
 
 ---
 
-## 🧪 Test Cases & Personas
+## Scenarios & Borrower Profiles
 
-- **Priya (`docs/PRIYA.md`)**: Salaried Corporate, ₹1.2L income, safe personal loan $\rightarrow$ `BORROW`
-- **Ravi (`docs/RAVI.md`)**: Self-Employed, 0 credit score, ₹45L shop property $\rightarrow$ `BORROW` via Secured LAP Route
-- **Anita (`docs/ANITA.md`)**: Informal / Gig worker, BNPL debt, payment bounce $\rightarrow$ `DONT_BORROW`
+- **Salaried Corporate (`docs/PRIYA.md`)**: Salaried Corporate, ₹1.2L income, safe personal loan $\rightarrow$ `BORROW`
+- **Self-Employed (`docs/RAVI.md`)**: Self-Employed, 0 credit score, ₹45L shop property $\rightarrow$ `BORROW` via Secured LAP Route
+- **Gig & Freelance (`docs/ANITA.md`)**: Informal / Gig worker, BNPL debt, payment bounce $\rightarrow$ `DONT_BORROW`
 
 ---
 
-## 🔮 What I Would Build Next
+## Future Roadmap
 
 1. **Document OCR Upload**: Scan sanction letters or bank statements to auto-fill income and bank quotes.
 2. **Multi-Lender Offer Comparison**: Side-by-side comparison matrix of quotes from HDFC, SBI, ICICI, and Axis Bank.
@@ -170,9 +169,9 @@ Full details are documented in [`RULES.md`](./RULES.md).
 
 ---
 
-## 🚫 What I Intentionally Did Not Build (And Why)
+## Design Decisions & Privacy Scope
 
 - **No Backend / Database**: Financial data stays 100% in React state for user privacy.
 - **No User Auth / Login**: Frictionless experience; zero barrier to entry.
 - **No Credit Bureau API Integration**: Avoids requiring user PAN/Aadhaar or hard bureau credit pulls.
-- **No Machine Learning / AI Hype**: Used transparent, deterministic financial rule engines that senior engineers and hiring teams can audit and defend.
+- **Deterministic Rule Engine**: Uses transparent, deterministic financial rule engines that users can inspect and rely on.
