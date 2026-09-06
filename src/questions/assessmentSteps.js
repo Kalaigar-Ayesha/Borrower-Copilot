@@ -1,0 +1,182 @@
+/**
+ * Adaptive Assessment Questionnaire Configuration
+ */
+
+import { LOAN_CATEGORIES, CIBIL_TIERS } from '../data/indianLendingBenchmarks.js';
+
+export const ASSESSMENT_STEPS = [
+  {
+    id: 'step_purpose',
+    stepNumber: 1,
+    title: 'Borrowing Objective & Amount',
+    subtitle: 'What is your primary borrowing goal and target loan size?',
+    fields: [
+      {
+        id: 'loanCategoryKey',
+        label: 'Type of Loan',
+        type: 'select',
+        options: Object.values(LOAN_CATEGORIES).map((cat) => ({
+          value: cat.id,
+          label: cat.label,
+          description: cat.description,
+        })),
+        defaultValue: 'PERSONAL',
+        helpText: 'Loan category determines RBI baseline rates, FOIR caps, and tax benefit eligibility.',
+      },
+      {
+        id: 'requestedAmount',
+        label: 'Desired Loan Amount (₹)',
+        type: 'number_currency',
+        placeholder: 'e.g. 5,000,00',
+        defaultValue: 500000,
+        min: 10000,
+        max: 50000000,
+        helpText: 'The principal amount you are planning to request from the bank.',
+      },
+      {
+        id: 'requestedTenureMonths',
+        label: 'Preferred Repayment Tenure',
+        type: 'tenure_select',
+        defaultValue: 36,
+        options: [
+          { value: 12, label: '1 Year (12 mo)' },
+          { value: 24, label: '2 Years (24 mo)' },
+          { value: 36, label: '3 Years (36 mo)' },
+          { value: 60, label: '5 Years (60 mo)' },
+          { value: 84, label: '7 Years (84 mo)' },
+          { value: 120, label: '10 Years (120 mo)' },
+          { value: 240, label: '20 Years (240 mo)' },
+        ],
+        helpText: 'Longer tenures lower monthly EMI but significantly increase total interest paid over time.',
+      },
+    ],
+  },
+  {
+    id: 'step_income',
+    stepNumber: 2,
+    title: 'Income & Employment Stability',
+    subtitle: 'Help us calculate your true debt-taking capacity.',
+    fields: [
+      {
+        id: 'netMonthlyIncome',
+        label: 'Net Monthly Take-Home Income (₹)',
+        type: 'number_currency',
+        placeholder: 'e.g. 85,000',
+        defaultValue: 85000,
+        required: true,
+        helpText: 'Actual in-hand salary or business net profit credited to bank account per month.',
+      },
+      {
+        id: 'incomeType',
+        label: 'Employment Status',
+        type: 'radio_cards',
+        options: [
+          { value: 'SALARIED_MNC', label: 'Salaried (MNC / Govt / Corporate)', desc: 'Highest bank stability rating' },
+          { value: 'SALARIED_STARTUP', label: 'Salaried (Startup / SME)', desc: 'Standard stability' },
+          { value: 'SELF_EMPLOYED_PRO', label: 'Self-Employed Professional (Doctor, CA, Tech)', desc: 'High earning capacity' },
+          { value: 'BUSINESS_OWNER', label: 'Business Owner / Trader', desc: 'Cashflow variable' },
+        ],
+        defaultValue: 'SALARIED_MNC',
+      },
+      {
+        id: 'hasVariableIncome',
+        label: 'Do you rely significantly on annual bonuses or commissions?',
+        type: 'boolean_toggle',
+        defaultValue: false,
+      },
+      {
+        id: 'variableIncomeAmount',
+        label: 'Annual Variable Bonus / Commission (₹)',
+        type: 'number_currency',
+        placeholder: 'e.g. 1,50,000',
+        defaultValue: 0,
+        dependsOn: { field: 'hasVariableIncome', value: true },
+        helpText: 'Indian banks typically discount variable income by 40-50% for sanction FOIR calculations.',
+      },
+    ],
+  },
+  {
+    id: 'step_expenses',
+    stepNumber: 3,
+    title: 'Living Expenses & Existing Debts',
+    subtitle: 'Unknown expenses will be estimated conservatively.',
+    fields: [
+      {
+        id: 'essentialLivingCosts',
+        label: 'Essential Monthly Living Costs (Rent, Groceries, Utilities, Dependants) (₹)',
+        type: 'number_currency_with_estimate',
+        placeholder: 'e.g. 30,000',
+        defaultValue: 30000,
+        allowUnknown: true,
+        unknownLabel: 'Not sure (Estimate automatically at 38% of income)',
+        helpText: 'Non-discretionary costs needed to maintain your household.',
+      },
+      {
+        id: 'existingMonthlyEmis',
+        label: 'Total Existing Monthly EMIs (Home, Credit Card, BNPL, Car) (₹)',
+        type: 'number_currency',
+        placeholder: 'e.g. 12,000',
+        defaultValue: 0,
+        helpText: 'Current active monthly debt obligations across all bank accounts.',
+      },
+    ],
+  },
+  {
+    id: 'step_credit',
+    stepNumber: 4,
+    title: 'Credit Score & Emergency Cushion',
+    subtitle: 'Credit tier dictates your interest rate pricing band.',
+    fields: [
+      {
+        id: 'cibilTierKey',
+        label: 'CIBIL / Experian Credit Score Range',
+        type: 'select',
+        options: Object.values(CIBIL_TIERS).map((t) => ({
+          value: t.key,
+          label: t.label,
+        })),
+        defaultValue: 'EXCELLENT',
+        helpText: 'Scores above 750 command bottom-of-the-market interest rates and zero processing fee waivers.',
+      },
+      {
+        id: 'emergencySavingsMonths',
+        label: 'Emergency Savings Cushion (Months of expenses saved in bank)',
+        type: 'range_slider',
+        min: 0,
+        max: 12,
+        step: 1,
+        defaultValue: 4,
+        unitLabel: 'months',
+        helpText: 'Financial advisors recommend at least 3-6 months of living expenses saved before taking major loans.',
+      },
+    ],
+  },
+  {
+    id: 'step_quote',
+    stepNumber: 5,
+    title: 'Bank Quoted Terms (Optional)',
+    subtitle: 'Have a loan quote from a bank? Enter terms to analyze true All-in APR.',
+    fields: [
+      {
+        id: 'customInterestRate',
+        label: 'Lender Quoted Nominal Interest Rate (% p.a.)',
+        type: 'number_percent',
+        placeholder: 'e.g. 11.5',
+        defaultValue: 11.5,
+        allowUnknown: true,
+        unknownLabel: 'Don\'t have a quote yet (Use market benchmark average)',
+        helpText: 'The nominal interest rate stated on your bank sanction quote.',
+      },
+      {
+        id: 'processingFeePercent',
+        label: 'Quoted Processing Fee (%)',
+        type: 'number_percent',
+        placeholder: 'e.g. 1.5',
+        defaultValue: 1.5,
+        allowUnknown: true,
+        unknownLabel: 'Not sure (Use standard 1.5% benchmark)',
+        helpText: 'Standard processing fee charged upfront. Note: 18% GST applies on top.',
+      },
+    ],
+  },
+];
