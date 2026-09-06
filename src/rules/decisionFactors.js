@@ -34,6 +34,8 @@ export function getDecisionFactors(borrower = {}, assessment = {}) {
   } = assessment;
 
   const decision = verdict ? verdict.decision : 'BORROW';
+  const isDontBorrow = decision === 'DONT_BORROW';
+  const isBorrowLess = decision === 'BORROW_LESS';
   const factors = [];
   let stepCounter = 1;
 
