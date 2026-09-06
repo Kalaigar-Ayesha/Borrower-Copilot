@@ -19,7 +19,7 @@ export function LandingPage({ onStartAssessment, onLoadPreset }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
           <button className="btn btn-primary btn-lg" onClick={onStartAssessment}>
-            Calculate Borrowing Capacity &rarr;
+            Calculate Borrowing Capacity
           </button>
         </div>
       </div>

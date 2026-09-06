@@ -305,7 +305,7 @@ export function AssessmentPage({
           disabled={activeQuestionIndex === 0}
           style={{ opacity: activeQuestionIndex === 0 ? 0.4 : 1 }}
         >
-          &larr; Back
+          Back
         </button>
 
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
@@ -316,7 +316,7 @@ export function AssessmentPage({
           )}
 
           <button className="btn btn-primary btn-lg" onClick={handleContinue}>
-            {activeQuestionIndex === totalActiveQuestions - 1 ? 'View Copilot Report &rarr;' : 'Continue &rarr;'}
+            {activeQuestionIndex === totalActiveQuestions - 1 ? 'View Copilot Report' : 'Continue'}
           </button>
         </div>
       </div>
