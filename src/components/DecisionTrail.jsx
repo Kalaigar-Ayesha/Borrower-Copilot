@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function DecisionTrail({ profile, affordability, verdict, confidence }) {
-  if (!profile || !verdict) return null;
+  if (!profile || !verdict || !affordability || !affordability.routing) return null;
 
   const steps = [
     {
