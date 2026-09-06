@@ -42,7 +42,7 @@ export function ConfidenceCommunication({ confidence, onEditAssessment }) {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
           <div>
             <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem' }}>
-              ✓ Verified / User-Provided Figures:
+              Verified / User-Provided Figures:
             </span>
             <ul style={{ paddingLeft: '1.2rem', fontSize: '0.85rem', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
               <li>• In-hand Net Monthly Income</li>
@@ -53,7 +53,7 @@ export function ConfidenceCommunication({ confidence, onEditAssessment }) {
 
           <div>
             <span style={{ fontSize: '0.78rem', fontWeight: 700, color: badgeColor, textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem' }}>
-              {missingOrEstimatedFields.length > 0 ? `⚠️ Estimated / Skipped Parameters (${missingOrEstimatedFields.length}):` : '✓ All Key Parameters Verified'}
+              {missingOrEstimatedFields.length > 0 ? `Estimated / Skipped Parameters (${missingOrEstimatedFields.length}):` : 'All Key Parameters Verified'}
             </span>
 
             {missingOrEstimatedFields.length > 0 ? (
@@ -78,7 +78,7 @@ export function ConfidenceCommunication({ confidence, onEditAssessment }) {
             onClick={onEditAssessment}
             style={{ marginTop: '1rem' }}
           >
-            ✏️ Provide Missing Details to Lock Exact Bounds
+            Provide Missing Details to Lock Exact Bounds
           </button>
         )}
       </div>

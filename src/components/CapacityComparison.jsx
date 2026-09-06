@@ -49,7 +49,7 @@ export function CapacityComparison({ lenderSanction, borrowerSafe, requestedAmou
               letterSpacing: '0.05em',
             }}
           >
-            ★ PRIMARY RECOMMENDATION: SAFE CAPACITY
+            RECOMMENDED: SAFE CAPACITY
           </span>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
@@ -68,7 +68,7 @@ export function CapacityComparison({ lenderSanction, borrowerSafe, requestedAmou
           </div>
 
           <div style={{ fontSize: '0.82rem', color: 'var(--color-sage)', marginTop: '1rem', borderTop: '1px solid var(--color-sage-light)', paddingTop: '0.6rem' }}>
-            ✓ Protects ₹{formatINR(borrowerSafe.disposableSurplus)} monthly disposable surplus after living costs (₹{formatINR(borrowerSafe.effectiveLivingCosts)}/mo).
+            Protects ₹{formatINR(borrowerSafe.disposableSurplus)} monthly disposable surplus after living costs (₹{formatINR(borrowerSafe.effectiveLivingCosts)}/mo).
           </div>
         </div>
 
@@ -105,7 +105,6 @@ export function CapacityComparison({ lenderSanction, borrowerSafe, requestedAmou
 
       {gap > 50000 && (
         <div style={{ marginTop: '1.25rem', background: 'var(--color-warn-light)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-warn-border)', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <div style={{ fontSize: '1.25rem', color: 'var(--color-warn)' }}>⚠️</div>
           <div style={{ fontSize: '0.88rem', color: 'var(--color-text)' }}>
             <strong>Bank Over-Sanction Warning:</strong> Banks are willing to lend you up to <strong>{formatINR(gap)}</strong> more than your safe capacity. Do not accept the maximum bank sanction; stick to your borrower-safe range.
           </div>

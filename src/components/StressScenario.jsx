@@ -54,7 +54,7 @@ export function StressScenario({ stressScenarios }) {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: sc.passed ? 'var(--color-primary)' : 'var(--color-danger)', textTransform: 'uppercase' }}>
-                {sc.passed ? '✓ PASSED' : '⚠️ FAILED'}
+                {sc.passed ? 'PASSED' : 'FAILED'}
               </span>
             </div>
 

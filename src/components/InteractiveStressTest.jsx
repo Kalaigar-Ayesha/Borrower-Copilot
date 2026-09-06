@@ -40,7 +40,7 @@ export function InteractiveStressTest({ netMonthlyIncome, essentialLivingCosts, 
             fontSize: '0.8rem',
           }}
         >
-          {isResilient ? '✓ RESILIENT UNDER SHOCK' : '⚠️ CASHFLOW DEFICIT'}
+          {isResilient ? 'RESILIENT UNDER SHOCK' : 'CASHFLOW DEFICIT'}
         </span>
       </div>
 
@@ -100,8 +100,8 @@ export function InteractiveStressTest({ netMonthlyIncome, essentialLivingCosts, 
 
           <div style={{ maxWidth: '420px', fontSize: '0.88rem', color: 'var(--color-text)' }}>
             {isResilient
-              ? `✓ Your budget maintains a positive buffer of ${formatINR(stressedSurplus)}/mo even under a -${incomeShockPercent}% income reduction and +${rateHikeBps}% rate hike.`
-              : `⚠️ Under a -${incomeShockPercent}% income drop and +${rateHikeBps}% rate spike, your cash flow incurs a deficit of ${formatINR(Math.abs(stressedSurplus))}/mo. Consider trimming your loan size.`}
+              ? `Your budget maintains a positive buffer of ${formatINR(stressedSurplus)}/mo even under a -${incomeShockPercent}% income reduction and +${rateHikeBps}% rate hike.`
+              : `Under a -${incomeShockPercent}% income drop and +${rateHikeBps}% rate spike, your cash flow incurs a deficit of ${formatINR(Math.abs(stressedSurplus))}/mo. Consider trimming your loan size.`}
           </div>
         </div>
       </div>

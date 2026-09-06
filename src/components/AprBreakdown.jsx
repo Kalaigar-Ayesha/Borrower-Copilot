@@ -92,7 +92,7 @@ export function AprBreakdown({ aprResults, fairRateRange }) {
 
       {isFeeDragHigh && (
         <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'var(--color-warn)' }}>
-          💡 <strong>Fee Drag Warning:</strong> Upfront fees add <strong>+{feeDrag.toFixed(2)}%</strong> effective cost on top of your nominal interest rate. Negotiation can remove this fee.
+          <strong>Fee Drag Warning:</strong> Upfront fees add <strong>+{feeDrag.toFixed(2)}%</strong> effective cost on top of your nominal interest rate. Negotiation can remove this fee.
         </p>
       )}
 

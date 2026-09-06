@@ -36,7 +36,7 @@ export function WhatIfSimulator({ safeEmiCeiling, defaultAmount = 500000, defaul
             fontSize: '0.8rem',
           }}
         >
-          {isSafe ? '✓ SAFE FOR BUDGET' : '⚠️ EXCEEDS SAFE CEILING'}
+          {isSafe ? 'SAFE FOR BUDGET' : 'EXCEEDS SAFE CEILING'}
         </span>
       </div>
 
@@ -122,7 +122,7 @@ export function WhatIfSimulator({ safeEmiCeiling, defaultAmount = 500000, defaul
             {formatINR(safeEmiCeiling)}/mo
           </div>
           <span style={{ fontSize: '0.78rem', color: isSafe ? 'var(--color-sage)' : 'var(--color-danger)', fontWeight: 600 }}>
-            {isSafe ? '✓ Within budget' : `⚠️ Exceeds ceiling by ${formatINR(surplusExceeded)}/mo`}
+            {isSafe ? 'Within budget' : `Exceeds ceiling by ${formatINR(surplusExceeded)}/mo`}
           </span>
         </div>
       </div>

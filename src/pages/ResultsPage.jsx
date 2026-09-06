@@ -57,10 +57,10 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
 
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <button className="btn btn-secondary btn-sm" onClick={onEditAssessment}>
-            ✏️ Modify Input Values
+            Modify Input Values
           </button>
           <button className="btn btn-primary btn-sm" onClick={() => window.print()}>
-            🖨️ Export PDF / Print
+            Export PDF / Print
           </button>
         </div>
       </div>

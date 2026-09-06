@@ -12,7 +12,6 @@ export function AssessmentPage({
   nextQuestion,
   prevQuestion,
   onComplete,
-  results,
   loadPresetProfile,
 }) {
   const [showWhyAccordion, setShowWhyAccordion] = useState(false);
@@ -24,7 +23,6 @@ export function AssessmentPage({
   const isUnknown = value === null || value === undefined;
 
   const handleContinue = () => {
-    // Run validation if present
     if (currentQuestion.validation && !isUnknown) {
       const err = currentQuestion.validation(value);
       if (err) {
@@ -64,36 +62,35 @@ export function AssessmentPage({
   return (
     <main className="container container-narrow" style={{ padding: '2rem 1.5rem 4rem' }}>
       {/* Persona Switcher Bar */}
-      <div style={{ background: 'var(--bg-surface-elevated)', padding: '0.75rem 1.25rem', borderRadius: 'var(--radius-pill)', border: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+      <div style={{ background: 'var(--bg-surface-elevated)', padding: '0.6rem 1.15rem', borderRadius: 'var(--radius-pill)', border: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
         <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
-          ⚡ Persona Testing Presets:
+          Persona Testing Presets:
         </span>
         <div style={{ display: 'flex', gap: '0.4rem' }}>
           <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('SALARIED_SAFE')}>
-            Salaried Corporate
+            Priya (Salaried)
           </button>
           <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('SELF_EMPLOYED_BUSINESS')}>
-            Self-Employed Business
+            Ravi (Business LAP)
           </button>
           <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('INFORMAL_GIG_RISK')}>
-            Informal / Gig Worker
+            Anita (Gig Risk)
           </button>
         </div>
       </div>
 
       {/* Progress Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            Question {activeQuestionIndex + 1} of {totalActiveQuestions} (Adaptive)
+      <div style={{ marginBottom: '1.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            Question {activeQuestionIndex + 1} of {totalActiveQuestions}
           </span>
-          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
             {progressPercentage}% Completed
           </span>
         </div>
 
-        {/* Progress Bar */}
-        <div style={{ width: '100%', height: '6px', background: 'var(--color-border)', borderRadius: 'var(--radius-pill)', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '5px', background: 'var(--color-border)', borderRadius: 'var(--radius-pill)', overflow: 'hidden' }}>
           <div
             style={{
               width: `${progressPercentage}%`,
@@ -105,23 +102,21 @@ export function AssessmentPage({
         </div>
       </div>
 
-      {/* Single Question Container Card */}
-      <div className="card" style={{ padding: '2.5rem 2rem', marginBottom: '1.5rem', boxShadow: 'var(--shadow-md)' }}>
-        {/* Question Title & Subtitle */}
-        <h2 style={{ fontSize: '2.1rem', color: 'var(--color-primary)', marginBottom: '0.6rem', lineHeight: '1.25' }}>
+      {/* Question Card */}
+      <div className="card" style={{ padding: '2.25rem 2rem', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
+        <h2 style={{ fontSize: '2rem', color: 'var(--color-primary)', marginBottom: '0.5rem', lineHeight: '1.25' }}>
           {currentQuestion.question}
         </h2>
         {currentQuestion.description && (
-          <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', marginBottom: '2rem' }}>
+          <p style={{ fontSize: '1rem', color: 'var(--color-text-muted)', marginBottom: '1.75rem' }}>
             {currentQuestion.description}
           </p>
         )}
 
-        {/* Interactive Controls */}
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '1.75rem' }}>
           {/* CONTROL 1: Card Select */}
           {currentQuestion.type === 'card_select' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.85rem' }}>
               {currentQuestion.options.map((opt) => {
                 const isSelected = value === opt.value;
                 return (
@@ -132,23 +127,17 @@ export function AssessmentPage({
                       background: isSelected ? 'var(--color-sage-light)' : 'var(--bg-surface-elevated)',
                       border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                       borderRadius: 'var(--radius-md)',
-                      padding: '1.25rem',
+                      padding: '1.15rem',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '0.85rem',
+                      transition: 'all 0.15s ease',
                     }}
                   >
-                    {opt.icon && <span style={{ fontSize: '1.75rem', lineHeight: 1 }}>{opt.icon}</span>}
-                    <div>
-                      <strong style={{ fontSize: '1.05rem', color: 'var(--color-primary)', display: 'block' }}>
-                        {opt.label}
-                      </strong>
-                      <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginTop: '0.2rem', display: 'block' }}>
-                        {opt.desc}
-                      </span>
-                    </div>
+                    <strong style={{ fontSize: '1rem', color: 'var(--color-primary)', display: 'block' }}>
+                      {opt.label}
+                    </strong>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', marginTop: '0.2rem', display: 'block' }}>
+                      {opt.desc}
+                    </span>
                   </div>
                 );
               })}
@@ -159,11 +148,11 @@ export function AssessmentPage({
           {currentQuestion.type === 'currency' && (
             <div>
               <div className="input-currency-wrapper" style={{ marginBottom: '0.75rem' }}>
-                <span className="currency-prefix" style={{ fontSize: '1.4rem', left: '1.25rem' }}>₹</span>
+                <span className="currency-prefix" style={{ fontSize: '1.3rem', left: '1.25rem' }}>₹</span>
                 <input
                   type="number"
                   className="form-input"
-                  style={{ fontSize: '1.35rem', paddingLeft: '2.8rem', padding: '1rem 1rem 1rem 2.8rem', fontWeight: 600 }}
+                  style={{ fontSize: '1.25rem', paddingLeft: '2.8rem', padding: '0.9rem 1rem 0.9rem 2.8rem', fontWeight: 600 }}
                   placeholder={currentQuestion.placeholder}
                   value={isUnknown ? '' : value}
                   disabled={isUnknown}
@@ -172,7 +161,7 @@ export function AssessmentPage({
               </div>
 
               {!isUnknown && value > 0 && (
-                <div style={{ fontSize: '0.9rem', color: 'var(--color-primary)', fontWeight: 600, background: 'var(--color-sage-light)', padding: '0.4rem 0.8rem', borderRadius: 'var(--radius-pill)', display: 'inline-block' }}>
+                <div style={{ fontSize: '0.88rem', color: 'var(--color-primary)', fontWeight: 600, background: 'var(--color-sage-light)', padding: '0.35rem 0.75rem', borderRadius: 'var(--radius-pill)', display: 'inline-block' }}>
                   Formatted: {formatINR(value)}
                 </div>
               )}
@@ -186,7 +175,7 @@ export function AssessmentPage({
                 type="number"
                 step={currentQuestion.type === 'percent' ? '0.1' : '1'}
                 className="form-input"
-                style={{ fontSize: '1.25rem', padding: '0.9rem 1rem', fontWeight: 600 }}
+                style={{ fontSize: '1.2rem', padding: '0.85rem 1rem', fontWeight: 600 }}
                 placeholder={currentQuestion.placeholder}
                 value={isUnknown ? '' : value}
                 disabled={isUnknown}
@@ -197,7 +186,7 @@ export function AssessmentPage({
 
           {/* CONTROL 4: Pills / Tenure Pills */}
           {(currentQuestion.type === 'pills' || currentQuestion.type === 'tenure_pills') && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
               {currentQuestion.options.map((opt) => {
                 const isSelected = value === opt.value;
                 return (
@@ -208,16 +197,16 @@ export function AssessmentPage({
                       background: isSelected ? 'var(--color-sage-light)' : 'var(--bg-surface-elevated)',
                       border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                       borderRadius: 'var(--radius-sm)',
-                      padding: '1rem',
+                      padding: '0.9rem',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
+                      transition: 'all 0.15s ease',
                     }}
                   >
-                    <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)', display: 'block' }}>
+                    <strong style={{ fontSize: '0.92rem', color: 'var(--color-primary)', display: 'block' }}>
                       {opt.label}
                     </strong>
                     {opt.desc && (
-                      <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.2rem', display: 'block' }}>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginTop: '0.2rem', display: 'block' }}>
                         {opt.desc}
                       </span>
                     )}
@@ -236,10 +225,10 @@ export function AssessmentPage({
                   background: value === true ? 'var(--color-sage-light)' : 'var(--bg-surface-elevated)',
                   border: value === true ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-md)',
-                  padding: '1.5rem',
+                  padding: '1.25rem',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  fontSize: '1.2rem',
+                  fontSize: '1.1rem',
                   fontWeight: 700,
                   color: 'var(--color-primary)',
                 }}
@@ -252,10 +241,10 @@ export function AssessmentPage({
                   background: value === false ? 'var(--color-sage-light)' : 'var(--bg-surface-elevated)',
                   border: value === false ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-md)',
-                  padding: '1.5rem',
+                  padding: '1.25rem',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  fontSize: '1.2rem',
+                  fontSize: '1.1rem',
                   fontWeight: 700,
                   color: 'var(--color-primary)',
                 }}
@@ -268,9 +257,9 @@ export function AssessmentPage({
           {/* CONTROL 6: Range Slider */}
           {currentQuestion.type === 'slider' && (
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontWeight: 700, color: 'var(--color-primary)', fontSize: '1.1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontWeight: 700, color: 'var(--color-primary)', fontSize: '1.05rem' }}>
                 <span>{value || 0} {currentQuestion.unitLabel}</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
                   {currentQuestion.min} to {currentQuestion.max} months
                 </span>
               </div>
@@ -281,21 +270,21 @@ export function AssessmentPage({
                 step={currentQuestion.step || 1}
                 value={value || 0}
                 onChange={(e) => updateProfileValue(currentQuestion.id, parseInt(e.target.value, 10))}
-                style={{ width: '100%', height: '8px', accentColor: 'var(--color-primary)', cursor: 'pointer' }}
+                style={{ width: '100%', height: '6px', accentColor: 'var(--color-primary)', cursor: 'pointer' }}
               />
             </div>
           )}
 
           {validationError && (
-            <div style={{ color: 'var(--color-danger)', fontSize: '0.88rem', fontWeight: 600, marginTop: '0.75rem' }}>
-              ⚠️ {validationError}
+            <div style={{ color: 'var(--color-danger)', fontSize: '0.85rem', fontWeight: 600, marginTop: '0.6rem' }}>
+              {validationError}
             </div>
           )}
         </div>
 
-        {/* Expandable "Why are we asking this?" Accordion */}
+        {/* Expandable "Why?" Accordion */}
         {currentQuestion.impact && (
-          <div style={{ borderTop: '1px solid var(--color-border-subtle)', paddingTop: '1rem' }}>
+          <div style={{ borderTop: '1px solid var(--color-border-subtle)', paddingTop: '0.85rem' }}>
             <button
               onClick={() => setShowWhyAccordion(!showWhyAccordion)}
               style={{
@@ -303,22 +292,22 @@ export function AssessmentPage({
                 border: 'none',
                 color: 'var(--color-sage)',
                 fontWeight: 600,
-                fontSize: '0.9rem',
+                fontSize: '0.85rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.35rem',
                 padding: 0,
               }}
             >
               <span>{showWhyAccordion ? '▼' : '►'}</span>
-              <span>Why are we asking this question?</span>
+              <span>Why this question?</span>
             </button>
 
             {showWhyAccordion && (
-              <div style={{ background: 'var(--color-sage-light)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-sage)', marginTop: '0.75rem', animation: 'fadeIn 0.2s ease' }}>
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-primary)', lineHeight: '1.5', margin: 0 }}>
-                  💡 {currentQuestion.impact}
+              <div style={{ background: 'var(--color-sage-light)', padding: '0.85rem 1.15rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-sage)', marginTop: '0.6rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-primary)', lineHeight: '1.45', margin: 0 }}>
+                  {currentQuestion.impact}
                 </p>
               </div>
             )}
@@ -337,15 +326,15 @@ export function AssessmentPage({
           &larr; Back
         </button>
 
-        <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
           {currentQuestion.allowUnknown && (
             <button className="btn btn-ghost" onClick={handleSkip}>
-              {currentQuestion.unknownLabel || 'Skip / I don\'t know'}
+              {currentQuestion.unknownLabel || 'Don\'t know? Skip'}
             </button>
           )}
 
           <button className="btn btn-primary btn-lg" onClick={handleContinue}>
-            {activeQuestionIndex === totalActiveQuestions - 1 ? 'Generate Copilot Report &rarr;' : 'Continue &rarr;'}
+            {activeQuestionIndex === totalActiveQuestions - 1 ? 'View Copilot Report &rarr;' : 'Continue &rarr;'}
           </button>
         </div>
       </div>

@@ -1,60 +1,53 @@
 /**
  * Declarative Question Schema & Adaptive Question Bank
- * Each question defines its metadata, interactive controls, adaptive condition predicate,
- * and clear contextual impact ("Why are we asking?").
+ * Ultra-concise labels, zero emojis, standardized financial terminology.
  */
 
 import { LOAN_CATEGORIES, CIBIL_TIERS } from '../data/indianLendingBenchmarks.js';
 
 export const QUESTION_BANK = [
-  // ==========================================
-  // MUST QUESTION 1: Loan Purpose
-  // ==========================================
+  // 1. Loan Purpose
   {
     id: 'loanPurpose',
-    question: 'What is the primary purpose of this loan?',
-    description: 'Select the main reason you are planning to borrow funds.',
+    question: 'What is the loan for?',
+    description: 'Select your primary borrowing objective.',
     type: 'card_select',
     options: [
-      { value: 'PERSONAL', label: 'Personal & Family Expenses', desc: 'Medical, wedding, travel, or general personal use', icon: '👤' },
-      { value: 'HOME', label: 'Home Purchase or Renovation', desc: 'Property purchase, construction, or major repair', icon: '🏠' },
-      { value: 'CAR', label: 'Vehicle Purchase', desc: 'Four-wheeler or commercial vehicle financing', icon: '🚗' },
-      { value: 'BUSINESS', label: 'Business Growth & Capital', desc: 'Inventory, equipment, working capital, expansion', icon: '💼' },
-      { value: 'EDUCATION', label: 'Higher Education', desc: 'Domestic or international university tuition & living', icon: '🎓' },
-      { value: 'MEDICAL', label: 'Medical Emergency', desc: 'Hospitalization or urgent health treatment', icon: '🏥' },
+      { value: 'PERSONAL', label: 'Personal & Family', desc: 'Medical, wedding, travel, or family needs' },
+      { value: 'HOME', label: 'Home Purchase & Repair', desc: 'Property purchase, renovation, or repair' },
+      { value: 'CAR', label: 'Vehicle Purchase', desc: 'Car or commercial vehicle financing' },
+      { value: 'BUSINESS', label: 'Business Growth', desc: 'Working capital, inventory, or equipment' },
+      { value: 'EDUCATION', label: 'Higher Education', desc: 'Tuition and university living costs' },
+      { value: 'MEDICAL', label: 'Medical Emergency', desc: 'Hospitalization or health expenses' },
     ],
     defaultValue: 'PERSONAL',
     condition: () => true,
-    impact: 'Loan purpose determines applicable bank interest rate benchmarks, maximum allowable FOIR caps, tax deduction benefits, and whether the loan generates productive income.',
+    impact: 'Loan purpose determines applicable bank baseline rates, FOIR caps, and whether borrowing generates revenue.',
   },
 
-  // ==========================================
-  // MUST QUESTION 2: Requested Amount
-  // ==========================================
+  // 2. Requested Amount
   {
     id: 'requestedAmount',
-    question: 'How much loan principal do you want to borrow?',
-    description: 'Enter the target loan amount you plan to request from lenders.',
+    question: 'Desired loan amount',
+    description: 'Target principal you plan to request.',
     type: 'currency',
     placeholder: 'e.g. 5,00,000',
     defaultValue: 500000,
     min: 10000,
     max: 50000000,
     condition: () => true,
-    impact: 'The loan principal directly determines your monthly EMI obligation, lifetime interest cost, and required income-to-debt safety ratio.',
+    impact: 'The loan principal directly determines your monthly EMI and lifetime interest cost.',
     validation: (val) => {
       if (!val || val <= 0) return 'Please enter a valid loan amount above ₹10,000.';
       return null;
     },
   },
 
-  // ==========================================
-  // MUST QUESTION 3: Loan Product Category
-  // ==========================================
+  // 3. Loan Category
   {
     id: 'loanCategoryKey',
-    question: 'What type of loan product are you applying for?',
-    description: 'Secured loans (with collateral) offer lower interest rates than unsecured loans.',
+    question: 'Loan product type',
+    description: 'Secured loans offer lower interest rates than unsecured credit.',
     type: 'pills',
     options: Object.values(LOAN_CATEGORIES).map((cat) => ({
       value: cat.id,
@@ -63,55 +56,49 @@ export const QUESTION_BANK = [
     })),
     defaultValue: 'PERSONAL',
     condition: () => true,
-    impact: 'Lenders charge higher interest rates on unsecured personal loans (11-18%) compared to secured home or car loans (8.5-10.5%).',
+    impact: 'Lenders charge higher interest rates on unsecured personal credit compared to secured home or auto loans.',
   },
 
-  // ==========================================
-  // MUST QUESTION 4: Preferred Tenure
-  // ==========================================
+  // 4. Preferred Tenure
   {
     id: 'requestedTenureMonths',
-    question: 'What is your preferred repayment tenure?',
-    description: 'Longer tenures lower your monthly EMI but significantly increase total lifetime interest paid.',
+    question: 'Preferred tenure',
+    description: 'Longer tenures lower monthly EMI but increase total interest.',
     type: 'tenure_pills',
     options: [
       { value: 12, label: '1 Year (12 mo)', desc: 'Highest EMI, lowest total interest' },
       { value: 24, label: '2 Years (24 mo)', desc: 'Balanced short term' },
       { value: 36, label: '3 Years (36 mo)', desc: 'Standard retail loan tenure' },
-      { value: 60, label: '5 Years (60 mo)', desc: 'Lower EMI, higher interest' },
+      { value: 60, label: '5 Years (60 mo)', desc: 'Lower EMI, higher total interest' },
       { value: 84, label: '7 Years (84 mo)', desc: 'Long-term financing' },
-      { value: 120, label: '10 Years (120 mo)', desc: 'Extended property/business tenure' },
+      { value: 120, label: '10 Years (120 mo)', desc: 'Extended property tenure' },
     ],
     defaultValue: 36,
     condition: () => true,
-    impact: 'Tenure is the single biggest factor governing lifetime interest cost. A 5-year loan can cost 40% more in total interest than a 3-year loan for the exact same principal.',
+    impact: 'Tenure is the single largest factor governing lifetime interest cost.',
   },
 
-  // ==========================================
-  // MUST QUESTION 5: Income Type
-  // ==========================================
+  // 5. Income Type
   {
     id: 'incomeType',
-    question: 'What is your primary income or employment structure?',
-    description: 'Banks classify risk and FOIR sanction limits differently based on employment stability.',
+    question: 'Employment type',
+    description: 'Banks classify risk and FOIR sanction limits based on employment type.',
     type: 'card_select',
     options: [
-      { value: 'SALARIED', label: 'Salaried Employee', desc: 'Monthly fixed salary credited to bank account (MNC, Govt, Corporate)', icon: '🏢' },
-      { value: 'SELF_EMPLOYED', label: 'Self-Employed / Business Owner', desc: 'Business profit, professional practice (CA, Doctor, Tech Freelancer, Trade)', icon: '🏪' },
-      { value: 'INFORMAL_GIG', label: 'Informal / Gig Worker', desc: 'Daily/weekly payout, platform gig worker, contract worker', icon: '🛵' },
+      { value: 'SALARIED', label: 'Salaried Employee', desc: 'Monthly fixed salary credited to bank account' },
+      { value: 'SELF_EMPLOYED', label: 'Self-Employed / Business', desc: 'Business profit, professional practice, or trade' },
+      { value: 'INFORMAL_GIG', label: 'Informal / Gig Worker', desc: 'Platform gig worker, daily/weekly contract payout' },
     ],
     defaultValue: 'SALARIED',
     condition: () => true,
-    impact: 'Salaried borrowers get higher FOIR limits (up to 55%) due to predictable cash flow. Self-employed and gig workers require a larger safety buffer to account for income volatility.',
+    impact: 'Salaried borrowers get higher FOIR caps due to predictable monthly salary.',
   },
 
-  // ==========================================
-  // ADAPTIVE SALARIED 1: Employment Duration
-  // ==========================================
+  // Adaptive Salaried 1: Employment Duration
   {
     id: 'employmentDuration',
-    question: 'How long have you been working at your current organization?',
-    description: 'Lenders evaluate job stability before approving unsecured credit.',
+    question: 'Current job tenure',
+    description: 'Years at current organization.',
     type: 'pills',
     options: [
       { value: 'UNDER_1_YR', label: 'Less than 1 Year', desc: 'Higher bank scrutiny' },
@@ -121,88 +108,78 @@ export const QUESTION_BANK = [
     ],
     defaultValue: '1_TO_3_YRS',
     condition: (profile) => profile.incomeType === 'SALARIED',
-    impact: 'Borrowers with under 1 year at their current employer face tighter sanction caps and higher interest rates due to probation and job change risk.',
+    impact: 'Borrowers with under 1 year at current employer face tighter sanction limits.',
   },
 
-  // ==========================================
-  // ADAPTIVE SALARIED 2: Income Stability & Bonus
-  // ==========================================
+  // Adaptive Salaried 2: Variable Pay
   {
     id: 'hasVariableIncome',
-    question: 'Does a significant portion of your income depend on variable bonuses or commissions?',
-    description: 'Variable pay is discounted by Indian banks when calculating sanction eligibility.',
+    question: 'Variable bonus or commission?',
+    description: 'Variable pay is discounted by Indian banks for loan sanctioning.',
     type: 'boolean',
     defaultValue: false,
     condition: (profile) => profile.incomeType === 'SALARIED',
-    impact: 'Banks typically apply a 40-50% haircut to variable annual bonuses because they cannot be guaranteed for monthly EMI repayment.',
+    impact: 'Banks apply a 40-50% haircut to variable annual bonuses.',
   },
 
   {
     id: 'variableIncomeAmount',
-    question: 'What is your average annual variable bonus or incentive? (₹)',
-    description: 'Enter your total annual performance bonus or variable commission.',
+    question: 'Annual variable pay (₹)',
+    description: 'Average annual performance bonus.',
     type: 'currency',
     placeholder: 'e.g. 1,50,000',
     defaultValue: 0,
     condition: (profile) => profile.incomeType === 'SALARIED' && profile.hasVariableIncome === true,
-    impact: 'Copilot factors 50% of your annual variable bonus into your total yearly buffer, but excludes it from your mandatory monthly baseline EMI capacity.',
+    impact: 'Copilot factors 50% of annual bonus into yearly buffer but excludes it from baseline monthly EMI capacity.',
   },
 
-  // ==========================================
-  // ADAPTIVE SELF-EMPLOYED 1: Business Duration
-  // ==========================================
+  // Adaptive Self-Employed 1: Business Duration
   {
     id: 'businessDuration',
-    question: 'How many years has your business or professional practice been operational?',
-    description: 'Indian banks mandate at least 2-3 years of audited financial history for business loans.',
+    question: 'Years in business',
+    description: 'Operating history of business or practice.',
     type: 'pills',
     options: [
-      { value: 'UNDER_2_YRS', label: 'Less than 2 Years', desc: 'Early stage / New business' },
+      { value: 'UNDER_2_YRS', label: 'Less than 2 Years', desc: 'Early stage business' },
       { value: '2_TO_5_YRS', label: '2 to 5 Years', desc: 'Established operational track record' },
       { value: 'OVER_5_YRS', label: 'Over 5 Years', desc: 'Mature business stability' },
     ],
     defaultValue: '2_TO_5_YRS',
     condition: (profile) => profile.incomeType === 'SELF_EMPLOYED',
-    impact: 'Businesses under 2 years old are flagged for higher risk premium (+2% interest rate) because early-stage cash flows are vulnerable.',
+    impact: 'Businesses under 2 years old carry higher interest spreads due to cash flow uncertainty.',
   },
 
-  // ==========================================
-  // ADAPTIVE SELF-EMPLOYED 2: ITR Annual Income
-  // ==========================================
+  // Adaptive Self-Employed 2: ITR Income
   {
     id: 'itrAnnualIncome',
-    question: 'What is your net annual income declared in your latest ITR? (₹)',
-    description: 'Indian banks strictly calculate loan eligibility based on filed Income Tax Returns (ITR).',
+    question: 'Reported annual ITR net profit (₹)',
+    description: 'Net annual income declared in latest ITR return.',
     type: 'currency',
     placeholder: 'e.g. 9,00,000',
     defaultValue: 900000,
     allowUnknown: true,
-    unknownLabel: 'Haven\'t filed ITR / Don\'t have ITR',
+    unknownLabel: 'Don\'t know / Haven\'t filed ITR',
     unknownValue: null,
     condition: (profile) => profile.incomeType === 'SELF_EMPLOYED',
-    impact: 'Lenders will only sanction loans up to 50% of your reported ITR net profit. If your actual cash flow is higher than reported ITR, bank sanction will be severely capped.',
+    impact: 'Lenders sanction up to 50% of reported ITR profit.',
   },
 
-  // ==========================================
-  // ADAPTIVE SELF-EMPLOYED 3: Collateral Availability
-  // ==========================================
+  // Adaptive Self-Employed 3: Property Collateral
   {
     id: 'hasCollateral',
-    question: 'Can you pledge property, fixed deposits, or commercial assets as loan collateral?',
-    description: 'Collateral turns an unsecured loan into a secured facility with significantly lower interest rates.',
+    question: 'Pledge property collateral?',
+    description: 'Property collateral turns unsecured loan into lower-rate secured facility.',
     type: 'boolean',
     defaultValue: false,
     condition: (profile) => profile.incomeType === 'SELF_EMPLOYED',
-    impact: 'Pledging collateral reduces interest rates by 2.5% to 4.0% and unlocks up to 70% higher bank sanction limits.',
+    impact: 'Pledging property collateral reduces interest rates by 2.5% and unlocks higher loan sanction limits.',
   },
 
-  // ==========================================
-  // ADAPTIVE INFORMAL/GIG 1: Income Predictability
-  // ==========================================
+  // Adaptive Gig 1: Predictability
   {
     id: 'gigIncomePredictability',
-    question: 'How predictable is your monthly income from gig or contract work?',
-    description: 'Fluctuating monthly earnings increase the risk of missing EMI due dates.',
+    question: 'Income consistency',
+    description: 'Month-to-month earnings stability.',
     type: 'pills',
     options: [
       { value: 'VERY_PREDICTABLE', label: 'Fairly Consistent', desc: 'Varies by less than 15% each month' },
@@ -211,186 +188,166 @@ export const QUESTION_BANK = [
     ],
     defaultValue: 'SEASONAL',
     condition: (profile) => profile.incomeType === 'INFORMAL_GIG',
-    impact: 'Highly unpredictable income triggers a conservative 25% extra cash flow buffer in Copilot to ensure lean months do not lead to EMI default.',
+    impact: 'Unpredictable income adds a 20% safety buffer to living costs.',
   },
 
-  // ==========================================
-  // ADAPTIVE INFORMAL/GIG 2: High-Cost Debt Check
-  // ==========================================
+  // Adaptive Gig 2: High-Cost Debt
   {
     id: 'hasHighCostDebt',
-    question: 'Do you currently have active loans from BNPL apps, credit card roll-overs, or local money lenders?',
-    description: 'High-cost informal debt carries predatory interest rates (24% to 48% p.a.).',
+    question: 'Active BNPL or money lender debt?',
+    description: 'Includes credit card roll-overs, BNPL apps, or local lenders.',
     type: 'boolean',
     defaultValue: false,
     condition: (profile) => profile.incomeType === 'INFORMAL_GIG',
-    impact: 'Carrying high-cost informal debt triggers a "DO NOT BORROW" recommendation until predatory high-interest debts are fully cleared.',
+    impact: 'High-cost informal debt triggers a DO NOT BORROW recommendation.',
   },
 
-  // ==========================================
-  // ADAPTIVE INFORMAL/GIG 3: Recent Payment Bounce
-  // ==========================================
+  // Adaptive Gig 3: Recent Bounce
   {
     id: 'recentPaymentBounce',
-    question: 'Have you had any cheque, NACH, or loan EMI bounces in the last 6 months?',
-    description: 'Payment bounces leave a negative mark on your credit history.',
+    question: 'Recent EMI or cheque bounce?',
+    description: 'Any bounce in past 6 months.',
     type: 'boolean',
     defaultValue: false,
     condition: (profile) => profile.incomeType === 'INFORMAL_GIG' || profile.incomeType === 'SELF_EMPLOYED',
-    impact: 'Recent EMI bounces add severe credit risk penalties, causing banks to reject unsecured applications or charge maximum interest rates.',
+    impact: 'Recent bounces trigger credit risk penalties and bank rejection.',
   },
 
-  // ==========================================
-  // ADAPTIVE PRODUCTIVE 1: Expected Income Improvement
-  // ==========================================
+  // Adaptive Productive: Productive Check & Improvement
   {
     id: 'isProductiveBorrowing',
-    question: 'Will this loan directly generate income or increase your business revenue?',
-    description: 'Productive loans (equipment, inventory, education) pay for themselves over time.',
+    question: 'Will this loan generate revenue?',
+    description: 'Loans for equipment, inventory, or education pay for themselves over time.',
     type: 'boolean',
     defaultValue: false,
     condition: (profile) => profile.loanPurpose === 'BUSINESS' || profile.loanPurpose === 'EDUCATION',
-    impact: 'Productive borrowing that increases monthly earning capacity receives a positive rating in Copilot, as future revenue will offset EMI costs.',
+    impact: 'Revenue-generating borrowing improves long-term debt sustainability.',
   },
 
   {
     id: 'expectedIncomeImprovement',
-    question: 'What is the estimated monthly income boost generated by this investment? (₹/mo)',
-    description: 'Estimate the net additional monthly revenue or salary increase expected.',
+    question: 'Expected monthly revenue boost (₹)',
+    description: 'Estimated net additional income generated by loan investment.',
     type: 'currency',
     placeholder: 'e.g. 25,000',
     defaultValue: 25000,
     condition: (profile) => profile.isProductiveBorrowing === true,
-    impact: 'Copilot factors 50% of your projected future income boost into your long-term debt sustainability analysis.',
+    impact: 'Copilot factors 50% of expected revenue boost into future debt capacity.',
   },
 
-  // ==========================================
-  // MUST QUESTION 6: Net Monthly Income
-  // ==========================================
+  // 6. Net Monthly Income
   {
     id: 'netMonthlyIncome',
-    question: 'What is your net monthly take-home income? (₹)',
-    description: 'Enter your actual monthly salary credited or net monthly business cash inflow.',
+    question: 'Monthly take-home income (₹)',
+    description: 'Actual in-hand salary credited or net monthly cash inflow.',
     type: 'currency',
     placeholder: 'e.g. 85,000',
     defaultValue: 85000,
     condition: () => true,
-    impact: 'Net income is the foundation of all capacity calculations. Banks cap total debt at 50% of net income.',
+    impact: 'Net income is the foundation of all affordability calculations.',
     validation: (val) => {
-      if (!val || val <= 0) return 'Please enter your net monthly income to calculate safe capacity.';
+      if (!val || val <= 0) return 'Please enter your net monthly income.';
       return null;
     },
   },
 
-  // ==========================================
-  // MUST QUESTION 7: Existing Monthly EMIs
-  // ==========================================
+  // 7. Existing EMIs
   {
     id: 'existingMonthlyEmis',
-    question: 'What is the total of your existing monthly EMI obligations? (₹)',
-    description: 'Include active home loans, car loans, personal loans, BNPL, or credit card EMIs.',
+    question: 'Existing monthly EMIs (₹)',
+    description: 'Total active monthly debt obligations.',
     type: 'currency',
     placeholder: 'e.g. 12,000',
     defaultValue: 0,
     condition: () => true,
-    impact: 'Existing EMIs directly consume your available bank FOIR limit and reduce your monthly safe surplus.',
+    impact: 'Existing EMIs consume available FOIR caps and lower safe capacity.',
   },
 
-  // ==========================================
-  // MUST QUESTION 8: Monthly Household Expenses
-  // ==========================================
+  // 8. Living Expenses
   {
     id: 'essentialLivingCosts',
-    question: 'How much do you spend monthly on essential household expenses? (₹)',
-    description: 'Include rent, groceries, utilities, children tuition, and medical costs.',
+    question: 'Monthly living expenses (₹)',
+    description: 'Rent, groceries, utilities, and tuition.',
     type: 'currency',
     placeholder: 'e.g. 30,000',
     defaultValue: 30000,
     allowUnknown: true,
-    unknownLabel: 'Not sure (Estimate automatically at 38% of net income)',
+    unknownLabel: 'Don\'t know? That\'s okay. Your estimate will be wider.',
     unknownValue: null,
     condition: () => true,
-    impact: 'This is the most critical question where Borrower Copilot differs from banks. Lenders ignore living costs; Copilot protects them so you never face cash shortages.',
+    impact: 'Protecting living costs ensures you never face cash shortages after paying proposed EMI.',
   },
 
-  // ==========================================
-  // MUST QUESTION 9: Borrower Age
-  // ==========================================
+  // 9. Age
   {
     id: 'age',
-    question: 'What is your current age? (Years)',
-    description: 'Age dictates maximum allowable loan tenure under Indian banking rules.',
+    question: 'Your age',
+    description: 'Age dictates maximum allowable bank loan tenure.',
     type: 'number',
     placeholder: 'e.g. 32',
     defaultValue: 32,
     min: 18,
     max: 75,
     allowUnknown: true,
-    unknownLabel: 'Prefer not to say (Assume standard age 35)',
+    unknownLabel: 'Don\'t know? That\'s okay. Your estimate will be wider.',
     unknownValue: null,
     condition: () => true,
-    impact: 'Indian banks mandate that loan tenures must end before age 60 (for salaried) or age 65 (for self-employed). Older borrowers face shorter tenure limits.',
+    impact: 'Indian bank tenures must end before retirement age (60 for salaried, 65 for self-employed).',
   },
 
-  // ==========================================
-  // MUST QUESTION 10: Credit Score (CIBIL)
-  // ==========================================
+  // 10. Credit Score
   {
     id: 'cibilTierKey',
-    question: 'What is your estimated CIBIL credit score band?',
-    description: 'Select your score range. "I don\'t know" is a completely valid choice.',
+    question: 'Credit score',
+    description: 'Select your score band. "Don\'t know" is a completely valid choice.',
     type: 'pills',
     options: Object.values(CIBIL_TIERS).map((tier) => ({
       value: tier.key,
       label: tier.label,
-      desc: tier.isUnknown ? 'We will calculate using average market benchmarks' : `Score band ${tier.min}-${tier.max}`,
+      desc: tier.isUnknown ? 'Estimated using market benchmarks' : `Score ${tier.min}-${tier.max}`,
     })),
     defaultValue: 'EXCELLENT',
     allowUnknown: true,
-    unknownLabel: 'I don\'t know / Haven\'t checked score',
+    unknownLabel: 'Don\'t know? That\'s okay. Your estimate will be wider.',
     unknownValue: 'UNKNOWN',
     condition: () => true,
-    impact: 'CIBIL scores above 750 command the lowest interest rates and zero processing fees. If unknown, Copilot uses benchmark averages and expands confidence ranges.',
+    impact: 'Scores above 750 command bottom rates. Unknown scores widen rate ranges without rejecting the applicant.',
   },
 
-  // ==========================================
-  // MUST QUESTION 11: Emergency Savings Cushion
-  // ==========================================
+  // 11. Emergency Savings
   {
     id: 'emergencySavingsMonths',
-    question: 'How many months of living expenses do you currently have saved in bank deposits?',
-    description: 'Financial cushion available in liquid bank accounts or FDs.',
+    question: 'Emergency savings cushion',
+    description: 'Months of living expenses saved in liquid bank deposits.',
     type: 'slider',
     min: 0,
     max: 12,
     step: 1,
-    unitLabel: 'months of expenses',
+    unitLabel: 'months',
     defaultValue: 4,
     condition: () => true,
-    impact: 'Having less than 1 month of liquid savings when taking a major loan leaves you vulnerable to sudden job loss or medical emergencies.',
+    impact: 'Liquid savings cushion protects against default during sudden emergencies.',
   },
 
-  // ==========================================
-  // MUST QUESTION 12: Quoted Bank Terms (Optional)
-  // ==========================================
+  // 12. Quoted Terms (Optional)
   {
     id: 'customInterestRate',
-    question: 'Has a bank already quoted you an interest rate? (% p.a.)',
-    description: 'If you have a sanction letter or bank quote, enter the nominal rate.',
+    question: 'Quoted interest rate (% p.a.)',
+    description: 'Nominal rate stated on bank sanction quote.',
     type: 'percent',
     placeholder: 'e.g. 11.5',
     defaultValue: 11.5,
     allowUnknown: true,
-    unknownLabel: 'No quote yet (Use market benchmark average)',
+    unknownLabel: 'No quote yet (Use market benchmark)',
     unknownValue: null,
     condition: () => true,
-    impact: 'Entering your exact quoted rate allows Copilot to compute your true All-In Effective APR and generate precise bank negotiation scripts.',
+    impact: 'Entering quoted rate allows Copilot to compute true All-in APR.',
   },
 
   {
     id: 'processingFeePercent',
-    question: 'What processing fee percentage did the bank quote?',
-    description: 'Standard processing fees range from 0.5% to 2.5% plus 18% GST.',
+    question: 'Quoted processing fee (%)',
+    description: 'Standard processing fee charged upfront.',
     type: 'percent',
     placeholder: 'e.g. 1.5',
     defaultValue: 1.5,
@@ -398,6 +355,6 @@ export const QUESTION_BANK = [
     unknownLabel: 'Not sure (Use standard 1.5% benchmark)',
     unknownValue: null,
     condition: () => true,
-    impact: 'Processing fees are deducted upfront along with 18% GST, reducing the actual cash disbursed into your bank account.',
+    impact: 'Processing fees attract 18% GST and reduce net cash disbursed.',
   },
 ];

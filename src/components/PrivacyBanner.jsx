@@ -7,7 +7,7 @@ export function PrivacyBanner() {
         background: 'var(--bg-surface-elevated)',
         border: '1px solid var(--color-border-subtle)',
         borderRadius: 'var(--radius-pill)',
-        padding: '0.5rem 1.25rem',
+        padding: '0.45rem 1.15rem',
         display: 'inline-flex',
         alignItems: 'center',
         gap: '0.75rem',
@@ -17,12 +17,12 @@ export function PrivacyBanner() {
         marginBottom: '1.5rem',
       }}
     >
-      <span style={{ color: 'var(--color-sage)', fontWeight: 700 }}>🔒 PRIVACY BY DESIGN:</span>
-      <span>No login required</span>
+      <span style={{ color: 'var(--color-sage)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>PRIVACY FIRST:</span>
+      <span>No login</span>
       <span style={{ color: 'var(--color-border)' }}>•</span>
-      <span>No CIBIL bureau pull</span>
+      <span>No bureau pull</span>
       <span style={{ color: 'var(--color-border)' }}>•</span>
-      <span>Zero financial data stored</span>
+      <span>No data stored</span>
     </div>
   );
 }

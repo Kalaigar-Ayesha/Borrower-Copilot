@@ -109,9 +109,9 @@ export function QuoteCheckCard({ fairRateRange, defaultAmount, defaultTenure }) 
               COPILOT EVALUATION RESULT:
             </span>
             <h4 style={{ fontSize: '1.25rem', color: isRateAboveFair ? 'var(--color-warn)' : 'var(--color-primary)', marginTop: '0.2rem' }}>
-              {isRateAboveFair && '⚠️ Quoted Rate is Above Your Estimated Fair Range'}
-              {isRateFair && '✓ Quoted Rate is Within Your Estimated Fair Range'}
-              {isRateBelowFair && '⭐ Exceptional Deal (Below Fair Market Average)'}
+              {isRateAboveFair && 'Quoted Rate is Above Your Estimated Fair Range'}
+              {isRateFair && 'Quoted Rate is Within Your Estimated Fair Range'}
+              {isRateBelowFair && 'Exceptional Deal (Below Fair Market Average)'}
             </h4>
           </div>
 
