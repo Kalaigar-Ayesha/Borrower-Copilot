@@ -37,7 +37,7 @@ export function QuoteCheckCard({ fairRateRange, defaultAmount, defaultTenure }) 
       <div className="card-header" style={{ marginBottom: '1rem' }}>
         <div>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            FEATURE 1: Bank Offer Evaluation
+            BANK OFFER EVALUATION
           </span>
           <h3 style={{ marginTop: '0.2rem' }}>Quote Check: Compare Your Bank's Offer</h3>
           <p style={{ fontSize: '0.88rem' }}>Have a sanction quote from a bank Relationship Manager? Enter the offer terms below to verify if it is fair.</p>

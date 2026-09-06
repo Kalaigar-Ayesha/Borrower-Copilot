@@ -61,24 +61,6 @@ export function AssessmentPage({
 
   return (
     <main className="container container-narrow" style={{ padding: '2rem 1.5rem 4rem' }}>
-      {/* Persona Switcher Bar */}
-      <div style={{ background: 'var(--bg-surface-elevated)', padding: '0.6rem 1.15rem', borderRadius: 'var(--radius-pill)', border: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
-          Persona Testing Presets:
-        </span>
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
-          <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('SALARIED_SAFE')}>
-            Priya (Salaried)
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('SELF_EMPLOYED_BUSINESS')}>
-            Ravi (Business LAP)
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={() => loadPresetProfile('INFORMAL_GIG_RISK')}>
-            Anita (Gig Risk)
-          </button>
-        </div>
-      </div>
-
       {/* Progress Header */}
       <div style={{ marginBottom: '1.75rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>

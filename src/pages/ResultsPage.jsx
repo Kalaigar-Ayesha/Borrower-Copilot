@@ -38,14 +38,14 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
 
   return (
     <main className="container" style={{ padding: '2rem 1.5rem 5rem' }}>
-      {/* FEATURE 7: Privacy Trust Banner */}
+      {/* Privacy Trust Banner */}
       <PrivacyBanner />
 
       {/* 1. Header: "Your borrowing snapshot" */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '1.25rem' }}>
         <div>
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            INDEPENDENT EVALUATION REPORT
+            FINANCIAL COPILOT SNAPSHOT
           </span>
           <h1 style={{ fontSize: '2.5rem', marginTop: '0.2rem', color: 'var(--color-primary)' }}>
             Your Borrowing Snapshot
@@ -87,14 +87,14 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
         fairRateRange={fairRateRange || { minFairRate: 11.0, maxFairRate: 12.5 }}
       />
 
-      {/* FEATURE 1: Quote Check Card */}
+      {/* Quote Check Card */}
       <QuoteCheckCard
         fairRateRange={fairRateRange || { minFairRate: 11.0, maxFairRate: 12.5 }}
         defaultAmount={activeProfile.requestedAmount}
         defaultTenure={activeProfile.requestedTenureMonths}
       />
 
-      {/* FEATURE 2: What-If Interactive Simulator */}
+      {/* What-If Interactive Simulator */}
       <WhatIfSimulator
         safeEmiCeiling={safeEmiCeiling || borrowerSafe.safeEmiCeiling}
         defaultAmount={activeProfile.requestedAmount}
@@ -102,7 +102,7 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
         defaultRate={fairRateRange ? fairRateRange.midRate : 11.5}
       />
 
-      {/* FEATURE 3: Interactive Stress Test */}
+      {/* Interactive Stress Test */}
       <InteractiveStressTest
         netMonthlyIncome={activeProfile.netMonthlyIncome || 85000}
         essentialLivingCosts={affordability ? affordability.borrowerSafeBasis.effectiveLivingCosts : 30000}
@@ -113,7 +113,7 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
         tenureMonths={activeProfile.requestedTenureMonths || 36}
       />
 
-      {/* FEATURE 4: Decision Trail Flowchart */}
+      {/* Decision Trail Flowchart */}
       <DecisionTrail
         profile={activeProfile}
         affordability={affordability}
@@ -128,12 +128,12 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
         onSelectTenure={onSelectTenure}
       />
 
-      {/* FEATURE 5: Actionable Bank Negotiation Battlecard */}
+      {/* Actionable Bank Negotiation Battlecard */}
       <NegotiationCard
         negotiationCard={negotiationCard}
       />
 
-      {/* FEATURE 6: Precision & Confidence Communication */}
+      {/* Precision & Confidence Communication */}
       <ConfidenceCommunication
         confidence={confidence}
         onEditAssessment={onEditAssessment}

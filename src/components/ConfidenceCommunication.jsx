@@ -27,7 +27,7 @@ export function ConfidenceCommunication({ confidence, onEditAssessment }) {
             {tier} CONFIDENCE ({scorePoints}/100)
           </span>
           <h4 style={{ margin: 0, color: badgeColor, fontSize: '1.1rem' }}>
-            FEATURE 6: Precision & Uncertainty Rating
+            Uncertainty & Precision Rating
           </h4>
         </div>
 

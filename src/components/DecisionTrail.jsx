@@ -38,7 +38,7 @@ export function DecisionTrail({ profile, affordability, verdict, confidence }) {
       <div className="card-header" style={{ marginBottom: '1.25rem' }}>
         <div>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            FEATURE 4: Rule Engine Transparency
+            DECISION BREAKDOWN
           </span>
           <h3 style={{ marginTop: '0.2rem' }}>Decision Trail: How We Calculated Your Result</h3>
           <p style={{ fontSize: '0.88rem' }}>Trace how your raw inputs passed through our financial rules to form your objective borrowing verdict.</p>

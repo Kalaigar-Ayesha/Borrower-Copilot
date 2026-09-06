@@ -39,13 +39,13 @@ export function Header({ currentStep, totalSteps, activePage, onNavigate }) {
 
           {activePage === 'results' && (
             <button className="btn btn-secondary btn-sm" onClick={() => onNavigate('assessment')}>
-              Edit Assessment
+              Edit Inputs
             </button>
           )}
 
           {activePage === 'landing' && (
             <button className="btn btn-primary btn-sm" onClick={() => onNavigate('assessment')}>
-              Start Assessment
+              Check Borrowing Power
             </button>
           )}
         </div>

@@ -17,12 +17,12 @@ export function PrivacyBanner() {
         marginBottom: '1.5rem',
       }}
     >
-      <span style={{ color: 'var(--color-sage)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>PRIVACY FIRST:</span>
-      <span>No login</span>
+      <span style={{ color: 'var(--color-sage)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>PRIVACY ASSURANCE:</span>
+      <span>100% Client-Side Evaluation</span>
       <span style={{ color: 'var(--color-border)' }}>•</span>
-      <span>No bureau pull</span>
+      <span>Direct Financial Analysis</span>
       <span style={{ color: 'var(--color-border)' }}>•</span>
-      <span>No data stored</span>
+      <span>Confidential</span>
     </div>
   );
 }

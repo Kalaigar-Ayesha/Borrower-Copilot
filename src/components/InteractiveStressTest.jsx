@@ -23,7 +23,7 @@ export function InteractiveStressTest({ netMonthlyIncome, essentialLivingCosts, 
       <div className="card-header" style={{ marginBottom: '1rem' }}>
         <div>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            FEATURE 3: Interactive Economic Shock Simulator
+            ECONOMIC SHOCK STRESS TEST
           </span>
           <h3 style={{ marginTop: '0.2rem' }}>Interactive Stress Test</h3>
           <p style={{ fontSize: '0.88rem' }}>Simulate real-world financial shocks (salary cuts or RBI rate tightening) to test your cash flow survival buffer.</p>

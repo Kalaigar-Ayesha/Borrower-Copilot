@@ -19,20 +19,16 @@ export function LandingPage({ onStartAssessment, onLoadPreset }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
           <button className="btn btn-primary btn-lg" onClick={onStartAssessment}>
-            Start assessment &rarr;
+            Calculate Borrowing Capacity &rarr;
           </button>
-
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
-            No login. No bureau pull. No data stored.
-          </span>
         </div>
       </div>
 
-      {/* Preset Personas Section */}
+      {/* Product Borrowing Profile Scenarios */}
       <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '1.75rem', marginBottom: '3.5rem', boxShadow: 'var(--shadow-sm)' }}>
         <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-          <h3 style={{ fontSize: '1.2rem', color: 'var(--color-primary)' }}>Explore Borrower Scenarios</h3>
-          <p style={{ fontSize: '0.88rem' }}>Select a borrower profile below to see instant Copilot evaluations.</p>
+          <h3 style={{ fontSize: '1.2rem', color: 'var(--color-primary)' }}>Select Your Borrowing Profile</h3>
+          <p style={{ fontSize: '0.88rem' }}>Choose your profile type to quickly evaluate your safe borrowing power.</p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
@@ -47,13 +43,13 @@ export function LandingPage({ onStartAssessment, onLoadPreset }) {
             }}
           >
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>
-              Priya Persona
+              Salaried Corporate
             </span>
             <strong style={{ fontSize: '1rem', color: 'var(--color-primary)', display: 'block' }}>
-              Safe Salaried Corporate
+              Regular Fixed Monthly Income
             </strong>
             <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', display: 'block' }}>
-              Income ₹1.2L/mo • Personal loan ₹3L • CIBIL 780
+              Optimized for personal loans, FOIR caps, and corporate salary accounts.
             </span>
           </div>
 
@@ -68,13 +64,13 @@ export function LandingPage({ onStartAssessment, onLoadPreset }) {
             }}
           >
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-warn)', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>
-              Ravi Persona
+              Business & LAP
             </span>
             <strong style={{ fontSize: '1rem', color: 'var(--color-warn)', display: 'block' }}>
-              Productive Business LAP
+              Secured Property & MSME Credit
             </strong>
             <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', display: 'block' }}>
-              Self-employed • ₹45L Property Collateral • Business loan ₹15L
+              Evaluates property collateral, business cash flows, and interest discounts.
             </span>
           </div>
 
@@ -89,13 +85,13 @@ export function LandingPage({ onStartAssessment, onLoadPreset }) {
             }}
           >
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-danger)', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>
-              Anita Persona
+              Independent / Gig Earner
             </span>
             <strong style={{ fontSize: '1rem', color: 'var(--color-danger)', display: 'block' }}>
-              High-Risk Informal Debt
+              Variable & Platform Income
             </strong>
             <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', display: 'block' }}>
-              Gig worker • BNPL debt • Payment bounce history
+              Factors in income variance, short-term debt risk, and emergency buffers.
             </span>
           </div>
         </div>

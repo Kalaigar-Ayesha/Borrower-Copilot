@@ -19,7 +19,7 @@ export function WhatIfSimulator({ safeEmiCeiling, defaultAmount = 500000, defaul
       <div className="card-header" style={{ marginBottom: '1rem' }}>
         <div>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-sage)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            FEATURE 2: Client-Side Interactive Simulator
+            INTERACTIVE LOAN SIMULATOR
           </span>
           <h3 style={{ marginTop: '0.2rem' }}>What-If Simulator</h3>
           <p style={{ fontSize: '0.88rem' }}>Adjust loan parameters in real-time to see instant impacts on monthly EMI, total interest, and budget safety.</p>

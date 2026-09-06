@@ -36,7 +36,7 @@ export function Footer() {
 
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} Borrower Copilot</span>
-          <span>Built for Lokta Software Engineering Intern Challenge</span>
+          <span>Independent Financial Decision Engine</span>
         </div>
       </div>
     </footer>
