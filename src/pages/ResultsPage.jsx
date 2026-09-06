@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrivacyBanner } from '../components/PrivacyBanner.jsx';
 import { VerdictBanner } from '../components/VerdictBanner.jsx';
+import { LenderVsYou } from '../components/LenderVsYou.jsx';
 import { CapacityComparison } from '../components/CapacityComparison.jsx';
 import { AprBreakdown } from '../components/AprBreakdown.jsx';
 import { TenureTradeoff } from '../components/TenureTradeoff.jsx';
@@ -70,6 +71,12 @@ export function ResultsPage({ results, profile, answers, onEditAssessment, onSel
         verdict={verdict}
         requestedAmount={activeProfile.requestedAmount}
         safePrincipal={borrowerSafe.safePrincipal}
+      />
+
+      {/* LENDER VS YOU Section */}
+      <LenderVsYou
+        results={results}
+        profile={activeProfile}
       />
 
       {/* 3. Borrower-Safe Capacity (Visually Dominant) vs Lender Sanction */}
